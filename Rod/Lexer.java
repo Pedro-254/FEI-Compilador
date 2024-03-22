@@ -8,10 +8,12 @@ public class Lexer {
   private List<Token> tokens;
   private List<AFD> afds;
   private CharacterIterator code;
+  private int linha;
 
-  public Lexer(String code) {
+  public Lexer(String code, int linha) {
     tokens = new ArrayList<>();
     this.code = new StringCharacterIterator(code);
+    this.linha = linha;
     afds = new ArrayList<>();
     afds.add(new Delimitador());
     afds.add(new Reservada());
@@ -48,7 +50,7 @@ public class Lexer {
       }
       if (accepted) continue;
       throw new RuntimeException(
-        "Error: Token not recognized: " + code.current() + " in line " + code.getIndex()
+        "Error: Token not recognized: " + code.current() + " in index " + code.getIndex() + " in line " + linha
       );
     }
     tokens.add(new Token("EOF", "$"));
