@@ -1,6 +1,12 @@
-float equacao(int x){
-    return(x + x) / 2.56 + 9;
-    // oi guerreiro n
-    \
-    
+miseratio x  1.0?
+miseratio y  9.0?
+
+si(x  y){
+    dicere(x,y,|Igual|)?
+    si()
+}
+
+si(x > y){
+    dicere(x ,|Maior|)?
+    System.out.println("Maior" + x);
 }

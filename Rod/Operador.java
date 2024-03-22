@@ -38,7 +38,7 @@ public class Operador extends AFD {
                 return new Token("LCHAVE","{");
             case'?':
                 codigo.next();
-                return new Token("FIM", ";");
+                return new Token("FIM", "?");
             default:
                 return null;
         }
