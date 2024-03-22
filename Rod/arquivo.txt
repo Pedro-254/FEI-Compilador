@@ -1,0 +1,5 @@
+float equacao(int x){
+    return (x + x) / 2.56 + 9;
+    // oi guerreiro n
+    //oilinda
+}
