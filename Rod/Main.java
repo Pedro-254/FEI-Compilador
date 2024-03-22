@@ -23,8 +23,13 @@ public class Main {
       linha = reader.readLine();
       count++;
     }
-    // String data = "pau int ola 12+54 = 14.8290\n //ola estou de pau duro\nfloat";
-    // System.out.println(data);
+    // String data = "noncomento System.out.println( + x) oblivion";
+    // // System.out.println(data);
+    // Lexer lexer = new Lexer(data, count);
+    //   tokens = lexer.getTokens();
+    //   for (Token token : tokens) {
+    //     System.out.println(token);
+    //   }
     
     reader.close();
   }

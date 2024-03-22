@@ -36,6 +36,10 @@ public class Id extends AFD {
       code.current() == '}' ||
       code.current() == '{' ||
       code.current() == '.' ||
+      code.current() == ',' ||
+      code.current() == '?' ||
+      code.current() == '|' ||
+      code.current() == '"' ||
       code.current() == CharacterIterator.DONE
     );
   }

@@ -18,6 +18,28 @@ public class Operador extends AFD {
             case'*':
                 codigo.next();
                 return new Token("MULTI", "*");
+            case '<':
+                codigo.next();
+                if (codigo.current() == '-'){
+                    codigo.next();
+                    return new Token("ATRIBUICAO", "<-");
+                }
+                if (codigo.current() == '='){
+                    codigo.next();
+                    if(codigo.current() == '>'){
+                        codigo.next();
+                        return new Token("IGUAL", "<=>");
+                    }
+                    return new Token("MENORIGUAL", "<=");
+                }
+                return new Token("MENOR", "<");
+            case '>':
+                codigo.next();
+                if (codigo.current() == '='){
+                    codigo.next();
+                    return new Token("MAIORIGUAL", ">=");
+                }
+                return new Token("MAIOR", ">");
             case'/':
                 codigo.next();
                 return new Token("DIV", "/");

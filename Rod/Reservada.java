@@ -37,7 +37,7 @@ public class Reservada extends AFD{
                         return new Token("FOR",plv);
                     case"si":
                         return new Token("IF",plv);
-                    case"else":
+                    case"oppositum":
                         return new Token("ELSE",plv);
                     case"nintendum":
                         return new Token("SWITCH",plv);

@@ -1,12 +1,19 @@
-miseratio x  1.0?
-miseratio y  9.0?
+miseratio x <- 1.0?
+miseratio y <- 9.0?
 
-si(x  y){
+si(x <=> y){
     dicere(x,y,|Igual|)?
-    si()
 }
 
 si(x > y){
     dicere(x ,|Maior|)?
-    System.out.println("Maior" + x);
 }
+
+
+si(x < y){
+    dicere(y,|Maior|)?
+}
+
+noncommento System.out.println("Maior" + x) oblivion
+
+noncommento ISSO é um comentário paia 32. 6.6 oblivion

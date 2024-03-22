@@ -48,6 +48,7 @@ public class Number extends AFD {
       code.current() == '}' ||
       code.current() == '{' ||
       code.current() == ';' ||
+      code.current() == '"' ||
       (code.current() == '.' && count == 0 )||
       code.current() == CharacterIterator.DONE
     );

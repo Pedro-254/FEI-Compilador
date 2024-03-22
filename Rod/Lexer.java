@@ -16,8 +16,8 @@ public class Lexer {
     this.linha = linha;
     afds = new ArrayList<>();
     afds.add(new Delimitador());
-    afds.add(new Reservada());
     afds.add(new Comentario());
+    afds.add(new Reservada());
     afds.add(new Id());
     afds.add(new Operador());
     afds.add(new Number());
