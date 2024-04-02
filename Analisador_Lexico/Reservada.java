@@ -72,6 +72,7 @@ public class Reservada extends AFD{
         codigo.current() == '}' ||
         codigo.current() == '{' ||
         codigo.current() == '.' ||
+        codigo.current() == '?' ||
         codigo.current() == CharacterIterator.DONE;
     }
 }
