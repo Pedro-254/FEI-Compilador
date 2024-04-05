@@ -14,7 +14,14 @@ public class Main {
     String linha = reader.readLine();
     while(linha != null){
       // System.out.println(linha);
-      data = linha + '\n';
+      data = linha + "\n";
+      if(data.contains("noncommento")){
+        while (!data.contains("oblivion") && linha != null) {
+          linha = reader.readLine();
+          data += linha + "\n";
+          count++;
+        }
+      }
       Lexer lexer = new Lexer(data, count);
       tokens = lexer.getTokens();
       for (Token token : tokens) {
@@ -23,8 +30,9 @@ public class Main {
       linha = reader.readLine();
       count++;
     }
+    // System.out.println(data);
     // String data = "noncomento System.out.println( + x) oblivion";
-    // // System.out.println(data);
+
     // Lexer lexer = new Lexer(data, count);
     //   tokens = lexer.getTokens();
     //   for (Token token : tokens) {
