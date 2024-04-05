@@ -50,7 +50,7 @@ public class Lexer {
       }
       if (accepted) continue;
       throw new RuntimeException(
-        "Error: Token not recognized: " + code.current() + " in index " + code.getIndex() + " in line " + linha
+        "Error: Token not recognized: " + code.current() + " in index: " + code.getIndex() + " in line: " + linha
       );
     }
     tokens.add(new Token("EOF", "$"));

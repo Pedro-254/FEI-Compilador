@@ -15,7 +15,7 @@ public class Id extends AFD {
 
     private String readId(CharacterIterator code) {
         String plv = "";
-        while (Character.isLetter(code.current())) {
+        while (Character.isLetterOrDigit(code.current())) {
             plv += code.current();
             code.next();
         }
