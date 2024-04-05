@@ -1,21 +1,23 @@
-miseratio x <- 1.0?
-miseratio y <- 9.0?
+miseratio x1 <- 1.0?
+miseratio y2 <- 9.0?
 
-si(x <=> y){
-    dicere(x,y,|Igual|)?
+si(x1 <=> y2){
+    dicere(x1,y2,|Igual|)?
 }
 
-si(x > y){
+si(x1 > y2){
     dicere(x ,|Maior|)?
 }
 
 
-si(x < y){
-    dicere(y,|Maior|)?
+si(x1 < y2){
+    dicere(y2,|Maior|)?
 }
 
-noncommento System.out.println(Maior + x) a oblivion
+noncommento System.out.println(Maior + x) a
 
-noncommento System.out.println(Maior + x) teste oblivionmiseratio z <- 1?
+noncommento System.out.println(Maior + x) testeoblivionmiseratio z <- 1?
+
+aaaa
 
 noncommento ISSO é um comentário paia 32. 6.6 oblivion 
