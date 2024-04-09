@@ -19,10 +19,9 @@ public class Lexer {
     afds.add(new Comentario());
     afds.add(new Reservada());
     afds.add(new Id());
+    afds.add(new Frase());
     afds.add(new Operador());
     afds.add(new Number());
-
-    
   }
 
   public void skipWhiteSpace() {
