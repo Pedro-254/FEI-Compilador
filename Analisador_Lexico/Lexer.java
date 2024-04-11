@@ -9,11 +9,13 @@ public class Lexer {
   private List<AFD> afds;
   private CharacterIterator code;
   private int linha;
+  private int coluna;
 
-  public Lexer(String code, int linha) {
+  public Lexer(String code) {
     tokens = new ArrayList<>();
     this.code = new StringCharacterIterator(code);
-    this.linha = linha;
+    this.linha = 1;
+    this.coluna = 0;
     afds = new ArrayList<>();
     afds.add(new Delimitador());
     afds.add(new Comentario());
@@ -25,16 +27,35 @@ public class Lexer {
   }
 
   public void skipWhiteSpace() {
-    while (code.current() == ' ' || code.current() == '\n') {
+    while (Character.isWhitespace(code.current())){
+      if (code.current() == '\n' || code.current() == '\r'){
+        if (code.current() == '\r' && code.next() != '\n'){
+          code.previous();
+        }
+        this.linha+=1;
+        this.coluna = code.getIndex();
+      }
       code.next();
+
     }
   }
+
+  // public void skipLine() {
+  //   while (code.current() == '\n' || code.current() == '\r'){
+  //     this.linha+=1;
+  //     this.coluna = code.getIndex();
+  //     code.next();
+  //   }
+  // }
 
   public List<Token> getTokens() {
     boolean accepted;
     while (code.current() != CharacterIterator.DONE) {
+      // System.out.println(code.current());
+      this.coluna++;
       accepted = false;
       skipWhiteSpace();
+      // skipLine();
       if (code.current() == CharacterIterator.DONE) break;
       for (AFD afd : afds) {
         int pos = code.getIndex();
@@ -49,7 +70,7 @@ public class Lexer {
       }
       if (accepted) continue;
       throw new RuntimeException(
-        "Error: Token not recognized: " + code.current() + " in index: " + code.getIndex() + " in line: " + linha
+        "Error: Token not recognized: " + code.current() + " in index: " + (code.getIndex() - this.coluna) + " in line: " + this.linha
       );
     }
     tokens.add(new Token("EOF", "$"));
