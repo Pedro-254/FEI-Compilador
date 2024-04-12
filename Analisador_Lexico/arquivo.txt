@@ -16,7 +16,9 @@ si(x1 < y2){
     dicere(y2,|Maior|)?
 }
 
-noncommento System.out.println(Maior + x) a noncommento System.out.println(Maior + x) testeoblivionmiseratio z <- 1?
+noncommento System.out.println(Maior + x) a 
+
+noncommento System.out.println(Maior + x) testeoblivionmiseratio z <- 1?
 
 aaaa
 

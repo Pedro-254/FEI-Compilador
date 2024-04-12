@@ -25,12 +25,13 @@ public class Main {
       // }
     //  linha = reader.readLine();
    // }
-    System.out.println(data);
     Lexer lexer = new Lexer(data);
     tokens = lexer.getTokens();
     for (Token token : tokens) {
       System.out.println(token);
     }
+
+    
     
     // System.out.println(data);
     // String data = "noncomento System.out.println( + x) oblivion";
