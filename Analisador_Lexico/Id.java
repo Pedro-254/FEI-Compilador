@@ -6,7 +6,7 @@ public class Id extends AFD {
   public Token evaluate(CharacterIterator code) {
     if (Character.isLetter(code.current())) {
       String plv = readId(code);
-      if (endId(code)) {
+      if (true) {
         return new Token("ID", plv);
       }
     }
@@ -21,26 +21,27 @@ public class Id extends AFD {
         }
         return plv;
     }
-  private boolean endId(CharacterIterator code) {
-    return (
-      code.current() == ' ' ||
-      code.current() == '\n' ||
-      code.current() == ';' ||
-      code.current() == '+' ||
-      code.current() == '-' ||
-      code.current() == '*' ||
-      code.current() == '/' ||
-      code.current() == '=' ||
-      code.current() == ')' ||
-      code.current() == '(' ||
-      code.current() == '}' ||
-      code.current() == '{' ||
-      code.current() == '.' ||
-      code.current() == ',' ||
-      code.current() == '?' ||
-      code.current() == '|' ||
-      code.current() == '"' ||
-      code.current() == CharacterIterator.DONE
-    );
-  }
+  // private boolean endId(CharacterIterator code) {
+  //   return (
+  //     code.current() == ' ' ||
+  //     code.current() == '\n' ||
+  //     code.current() == '\r' ||
+  //     code.current() == ';' ||
+  //     code.current() == '+' ||
+  //     code.current() == '-' ||
+  //     code.current() == '*' ||
+  //     code.current() == '/' ||
+  //     code.current() == '=' ||
+  //     code.current() == ')' ||
+  //     code.current() == '(' ||
+  //     code.current() == '}' ||
+  //     code.current() == '{' ||
+  //     code.current() == '.' ||
+  //     code.current() == ',' ||
+  //     code.current() == '?' ||
+  //     code.current() == '|' ||
+  //     code.current() == '"' ||
+  //     code.current() == CharacterIterator.DONE
+  //   );
+  // }
 }

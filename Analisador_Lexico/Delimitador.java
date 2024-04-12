@@ -16,9 +16,6 @@ public class Delimitador extends AFD {
             case '{':         
                 code.next();
                 return new Token("LCHAVE", "{");
-            case '|':         
-                code.next();
-                return new Token("ASPAS", "|");
             case ',':         
                 code.next();
                 return new Token("VIRGULA", ",");
