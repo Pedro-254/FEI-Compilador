@@ -58,4 +58,27 @@ public class Parser {
         }
         return false;
     }
+
+    public boolean opera(){
+        if(matchL("+") || matchL("-") || matchL("*") || matchL("/") ){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean compara(){
+        if(matchL("<") || matchL(">") || matchL("<=") || matchL(">=") || matchL("<>") || matchL("<=>")){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean condição(){
+        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
+            return true;
+        }
+        return false;
+    }
+
+
 }

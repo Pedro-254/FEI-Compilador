@@ -32,6 +32,10 @@ public class Operador extends AFD {
                     }
                     return new Token("MENORIGUAL", "<=");
                 }
+                if (codigo.current() == '>'){
+                    codigo.next();
+                    return new Token("DIFERENTE", "<>");
+                }
                 return new Token("MENOR", "<");
             case '>':
                 codigo.next();

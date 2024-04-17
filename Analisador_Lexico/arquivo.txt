@@ -4,16 +4,16 @@ miseratio y2 <- 9.0?
 filum z <- | Eu como terra |?
 
 si(x1 <=> y2){
-    dicere(x1,y2,|Igual|)?
+    dicere(|Igual|, x1, |=|,y2)?
 }
 
 si(x1 > y2){
-    dicere(x ,|Maior|)?
+    dicere(x ,|é Maior|)?
 }
 
 
 si(x1 < y2){
-    dicere(y2,|Maior|)?
+    dicere(|Maior é|, y2)?
 }
 
 noncommento System.out.println(Maior + x) a 
