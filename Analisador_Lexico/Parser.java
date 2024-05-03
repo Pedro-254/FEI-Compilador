@@ -34,6 +34,7 @@ public class Parser {
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchL("?")){
+            token = getNexToken();
             return true;
         }
         erro("metodo");
@@ -43,6 +44,7 @@ public class Parser {
     // x de dicere
     public boolean printado(){
         if( IDSTRING() && multiprintado()){
+            token = getNexToken();
             return true;
         }
         erro("printado");
@@ -51,6 +53,7 @@ public class Parser {
 
     public boolean IDSTRING(){
         if(matchT("ID") || matchT("STRING")){
+            token = getNexToken();
             return true;
         }
         erro("IDSTRING");
@@ -60,11 +63,26 @@ public class Parser {
     // y de dicere
     public boolean multiprintado(){
         if((matchT("VIRGULA") && IDSTRING() && multiprintado())){
+            token = getNexToken();
             return true;
         }
+        // vazio
         erro("multiprintado");
         return false;
     }
+
+    public boolean dum(){
+        if (matchL("dum") && matchT("(") && condição() && matchL(")") && matchL("{") && expressao() && matchL("}")){
+            token = getNexToken();
+            return true;
+        }
+        erro("dum");
+        return false;
+    }
+
+
+
+
 
     //compara lexema
     public boolean matchL(String lexema){
@@ -87,6 +105,7 @@ public class Parser {
 
     public boolean opera(){
         if(matchL("+") || matchL("-") || matchL("*") || matchL("/") ){
+            token = getNexToken();
             return true;
         }
         return false;
@@ -94,6 +113,7 @@ public class Parser {
 
     public boolean compara(){
         if(matchL("<") || matchL(">") || matchL("<=") || matchL(">=") || matchL("<>") || matchL("<=>")){
+            token = getNexToken();
             return true;
         }
         return false;
@@ -101,6 +121,7 @@ public class Parser {
 
     public boolean condição(){
         if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
+            token = getNexToken();
             return true;
         }
         return false;
