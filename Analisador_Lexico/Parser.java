@@ -32,11 +32,37 @@ public class Parser {
         }
     }
 
-    public boolean metodo(){
-        if(matchL("") && condição() && matchL("") && expressão()){
+    public boolean dicere(){
+        if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchL("?")){
             return true;
         }
         erro("metodo");
+        return false;
+    }
+    
+    // x de dicere
+    public boolean printado(){
+        if( IDSTRING() && multiprintado()){
+            return true;
+        }
+        erro("printado");
+        return false;
+    }
+
+    public boolean IDSTRING(){
+        if(matchT("ID") || matchT("STRING")){
+            return true;
+        }
+        erro("IDSTRING");
+        return false;
+    }
+
+    // y de dicere
+    public boolean multiprintado(){
+        if((matchT("VIRGULA") && IDSTRING() && multiprintado())){
+            return true;
+        }
+        erro("multiprintado");
         return false;
     }
 
