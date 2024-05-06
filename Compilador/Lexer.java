@@ -10,6 +10,7 @@ public class Lexer {
   private CharacterIterator code;
   private int linha;
   private int coluna;
+  private int atual;
 
   public Lexer(String code) {
     tokens = new ArrayList<>();
@@ -24,6 +25,8 @@ public class Lexer {
     afds.add(new Frase());
     afds.add(new Operador());
     afds.add(new Number());
+
+    atual = -1;
   }
 
   public void skipWhiteSpace() {
@@ -76,4 +79,10 @@ public class Lexer {
     tokens.add(new Token("EOF", "$"));
     return tokens;
   }
+
+  public Token NextToken(){
+    atual++;
+    return tokens.get(atual);
+  }
 } 
+

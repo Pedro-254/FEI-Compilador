@@ -12,7 +12,7 @@ public class Main {
     //BufferedReader reader = new BufferedReader(file);
     //String data = "";
     //String linha = reader.();
-    String data = new String(Files.readAllBytes(Paths.get("arquivo.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("teste.txt")), StandardCharsets.UTF_8);
     //while(linha != null){
       // System.out.println(linha);
       //data += linha ;
@@ -25,12 +25,13 @@ public class Main {
       // }
     //  linha = reader.readLine();
    // }
-    System.out.println(data);
+
+    // System.out.println(data);
     Lexer lexer = new Lexer(data);
     tokens = lexer.getTokens();
-    for (Token token : tokens) {
-      System.out.println(token);
-    }
+    // for (Token token : tokens) {
+    //   System.out.println(token);
+    // }
     
     // System.out.println(data);
     // String data = "noncomento System.out.println( + x) oblivion";
@@ -42,5 +43,11 @@ public class Main {
     //   }
     
     //reader.close();
+    Sintatico_Input teste = new Sintatico_Input();
+
+
+    if (teste.conferir(lexer)) {
+      System.out.println("deu bom");
+    };
   }
 }
