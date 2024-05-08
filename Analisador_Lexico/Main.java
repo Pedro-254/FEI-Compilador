@@ -12,7 +12,7 @@ public class Main {
     //BufferedReader reader = new BufferedReader(file);
     //String data = "";
     //String linha = reader.();
-    String data = new String(Files.readAllBytes(Paths.get("arquivo.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("arquivos/atri.txt")), StandardCharsets.UTF_8);
     //while(linha != null){
       // System.out.println(linha);
       //data += linha ;
@@ -31,7 +31,8 @@ public class Main {
       System.out.println(token);
     }
 
-    
+    Parser parser = new Parser(tokens);
+    parser.main();
     
     // System.out.println(data);
     // String data = "noncomento System.out.println( + x) oblivion";

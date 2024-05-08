@@ -1,0 +1,1 @@
+dicere(|aaaaaa|, x, y, |bbbbb|)?
