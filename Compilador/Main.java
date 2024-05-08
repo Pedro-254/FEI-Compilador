@@ -12,7 +12,7 @@ public class Main {
     //BufferedReader reader = new BufferedReader(file);
     //String data = "";
     //String linha = reader.();
-    String data = new String(Files.readAllBytes(Paths.get("arquivos/propositum.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("arquivos/atri.txt")), StandardCharsets.UTF_8);
     //while(linha != null){
       // System.out.println(linha);
       //data += linha ;

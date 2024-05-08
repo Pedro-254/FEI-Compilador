@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(propositum()){
+        if(atribui()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -32,22 +32,7 @@ public class Parser {
         }
     }
 
-    public boolean propositum(){
-        if(matchL("propositum") && matchL("(") && atribui() && matchL("?") && condição()
-        && matchL("?") && atualiza() && matchL(")") && matchL("{") && expre() && matchL("?") && matchL("}") && matchT("FIM")){
-            return true;
-        }
-        erro("propositum");
-        return false;
-    }  
-
-    public boolean atualiza(){
-        if(matchT("ID") && matchL("+") && matchL("+") && matchT("FIM")){
-            return true;
-        }
-        erro("atualiza");
-        return false;
-    }
+    
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
@@ -56,7 +41,7 @@ public class Parser {
         erro("dicere");
         return false;
     }
-
+    
     // x de dicere
     public boolean printado(){
         if( IDSTRING() && multiprintado()){
@@ -103,7 +88,7 @@ public class Parser {
 
 
     public boolean atribui(){
-        if( veritipo() && matchT("ID") && matchT("ATRIBUICAO") && matchT("NUM") || veritipo() && matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
+        if(veritipo()&& matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
             return true;
         }
         erro("atribui");
@@ -120,7 +105,7 @@ public class Parser {
 
 
     public boolean result(){
-        if(matchT("FRASE") ||  expre() ){
+        if(matchT("FRASE") ||  expre()){
             return true;
         }
         erro("result"); 
@@ -160,7 +145,7 @@ public class Parser {
     }
 
     public boolean fator(){
-        if (veritipo() && matchL("ID")||matchT("ID") || matchT("NUM") || matchT("FLUTUANTE") || matchL("?") || matchL("(") && expre() && matchL(")")){
+        if (matchT("ID") || matchT("NUM") || matchT("FLUTUANTE") || matchL("(") && expre() && matchL(")")){
             return true;
         }
         erro("fator");
@@ -185,7 +170,7 @@ public class Parser {
     
     public boolean compara(){
         if(matchL("<") || matchL(">") || matchL("<=") || matchL(">=") || matchL("<>") || matchL("<=>")){
-            token = getNexToken();
+            //token = getNexToken();
             return true;
         }
         return false;
@@ -193,7 +178,7 @@ public class Parser {
     
     public boolean condição(){
         if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
-            token = getNexToken();
+            // token = getNexToken();
             return true;
         }
         return false;
