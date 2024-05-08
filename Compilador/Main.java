@@ -44,5 +44,11 @@ public class Main {
     //   }
     
     //reader.close();
+    Sintatico_Input teste = new Sintatico_Input();
+
+
+    if (teste.conferir(lexer)) {
+      System.out.println("deu bom");
+    };
   }
 }
