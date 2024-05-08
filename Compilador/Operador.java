@@ -11,10 +11,10 @@ public class Operador extends AFD {
         switch(codigo.current()){
             case'+':
                 codigo.next();
-                return new Token("PLUS","+");
+                return new Token("SOMA","+");
             case'-':
                 codigo.next();
-                return new Token("LESS", "-");
+                return new Token("MENOS", "-");
             case'*':
                 codigo.next();
                 return new Token("MULTI", "*");
@@ -31,6 +31,10 @@ public class Operador extends AFD {
                         return new Token("IGUAL", "<=>");
                     }
                     return new Token("MENORIGUAL", "<=");
+                }
+                if (codigo.current() == '>'){
+                    codigo.next();
+                    return new Token("DIFERENTE", "<>");
                 }
                 return new Token("MENOR", "<");
             case '>':

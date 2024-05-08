@@ -1,0 +1,1 @@
+miseratio nume <- 4 + (6*z)/50 - y?
