@@ -31,7 +31,6 @@ public class Parser {
             }
         }
 
-        System.out.println("Passou Sintático!");
     }
 
     
@@ -188,11 +187,13 @@ public class Parser {
 
     //_______ Input ________
     public boolean Input(){
-        if(matchL("INPUT") || matchL("(") || matchT("ID") || matchL(")") || matchL("?")){
+        if(matchT("INPUT") && matchL("(") && matchT("ID") && matchL(")") && matchL("?")){
 
             return true;
+            
         }
 
+        erro("Erro input");
         return false;
     }
        
@@ -203,7 +204,7 @@ public class Parser {
         // _____ Código para debug _____
         // System.out.println("Entrada: " + lexema);
         // System.out.println("Lexema: " + token.getLexema());
-
+        
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
             return true;
@@ -216,7 +217,7 @@ public class Parser {
 
         // _____ Código para debug _____
         // System.out.println("Entrada: " + tipo);
-        // System.out.println("Token: " + token.getLexema());
+        // System.out.println("Tipo: " + token.getTipo());
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();
