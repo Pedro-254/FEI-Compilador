@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(atribui()){
+        if(reditus()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -32,7 +32,38 @@ public class Parser {
         }
     }
 
-    
+    public boolean reditus(){
+        if(matchL("reditus") && var()){
+            return true;
+        }
+        erro("reditus");
+        return false;
+    }
+
+    public boolean var(){
+        if(matchT("FRASE") || matchT("NUM") || matchL("inanis") && matchL("?")){
+            return true;
+        }
+        erro("var");
+        return false;
+    }
+
+    public boolean propositum(){
+        if(matchL("propositum") && matchL("(") && atribui() && condição() && atualiza() && matchL(")")
+         && matchL("{") && atribui() && matchL("}")){
+            return true;
+        }
+        erro("propositum");
+        return false;
+    }  
+
+    public boolean atualiza(){
+        if(matchT("ID") && matchL("+") && matchL("+")){
+            return true;
+        }
+        erro("atualiza");
+        return false;
+    }
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
@@ -88,7 +119,7 @@ public class Parser {
 
 
     public boolean atribui(){
-        if(veritipo()&& matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
+        if(veritipo() && matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
             return true;
         }
         erro("atribui");
@@ -177,7 +208,7 @@ public class Parser {
     }
     
     public boolean condição(){
-        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
+        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM")) && matchL("?")|| matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
             // token = getNexToken();
             return true;
         }
