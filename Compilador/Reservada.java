@@ -41,6 +41,12 @@ public class Reservada extends AFD{
                         return new Token("ELSE",plv);
                     case"nintendum":
                         return new Token("SWITCH",plv);
+                    case"confractus":
+                        return new Token("BREAK",plv);
+                    case"wii":
+                        return new Token("CASE",plv);
+                    case"vexillum":
+                        return new Token("DEFAULT",plv);
                     default:
                         return null;
                 }

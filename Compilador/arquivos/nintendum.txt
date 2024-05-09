@@ -1,0 +1,7 @@
+nintendum(x){
+    wii x : x+y?
+        confractus?
+    wii 2 : x-y?
+        confractus?
+    vexillum: x-y?
+}

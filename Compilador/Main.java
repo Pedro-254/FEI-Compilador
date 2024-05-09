@@ -10,7 +10,7 @@ public class Main {
     List<Token> tokens = null;
 
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/Input.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/nintendum.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexer = new Lexer(data);
@@ -18,6 +18,8 @@ public class Main {
     for (Token token : tokens) {
       System.out.println(token);
     }
+
+    System.out.println("_______Inicio Sintático________");
 
     //_______ Análise de Sintática (Lexico)_______
     Parser parser = new Parser(tokens);
