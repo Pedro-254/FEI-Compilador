@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(propositum()){
+        if(Input()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -233,8 +233,8 @@ public class Parser {
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-        System.out.println("Entrada: " + lexema);
-        System.out.println("Lexema: " + token.getLexema());
+        // System.out.println("Entrada: " + lexema);
+        // System.out.println("Lexema: " + token.getLexema());
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -247,8 +247,8 @@ public class Parser {
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-        System.out.println("Entrada: " + tipo);
-        System.out.println("Tipo: " + token.getTipo());
+        // System.out.println("Entrada: " + tipo);
+        // System.out.println("Tipo: " + token.getTipo());
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();
