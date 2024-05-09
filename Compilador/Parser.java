@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(Input()){
+        if(propositum()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -33,7 +33,38 @@ public class Parser {
 
     }
 
-    
+    public boolean reditus(){
+        if(matchL("reditus") && var()){
+            return true;
+        }
+        erro("reditus");
+        return false;
+    }
+
+    public boolean var(){
+        if(matchT("FRASE") || matchT("NUM") || matchL("inanis") && matchL("?")){
+            return true;
+        }
+        erro("var");
+        return false;
+    }
+
+    public boolean propositum(){
+        if(matchL("propositum") && matchL("(") && atribui() && condição() && atualiza() && matchL(")")
+         && matchL("{") && atribui() && matchL("}")){
+            return true;
+        }
+        erro("propositum");
+        return false;
+    }  
+
+    public boolean atualiza(){
+        if(matchT("ID") && matchL("+") && matchL("+")){
+            return true;
+        }
+        erro("atualiza");
+        return false;
+    }
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
@@ -178,7 +209,7 @@ public class Parser {
     }
     
     public boolean condição(){
-        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
+        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM")) && matchL("?")|| matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
             // token = getNexToken();
             return true;
         }
@@ -202,8 +233,8 @@ public class Parser {
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-        // System.out.println("Entrada: " + lexema);
-        // System.out.println("Lexema: " + token.getLexema());
+        System.out.println("Entrada: " + lexema);
+        System.out.println("Lexema: " + token.getLexema());
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -216,8 +247,8 @@ public class Parser {
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-        // System.out.println("Entrada: " + tipo);
-        // System.out.println("Tipo: " + token.getTipo());
+        System.out.println("Entrada: " + tipo);
+        System.out.println("Tipo: " + token.getTipo());
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();
