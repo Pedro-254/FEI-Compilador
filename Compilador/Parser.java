@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(Input()){
+        if(nintendum()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -227,14 +227,49 @@ public class Parser {
         erro("Erro input");
         return false;
     }
+
+    //________ Switch Case_______
+    public boolean nintendum(){
+        if(matchL("nintendum") && matchL("(") && matchT("ID") && matchL(")") && matchL("{") && wii() && matchL("}")){
+            return true;
+        } 
+        erro("nintendum");
+        return false;
+    }
+
+    public boolean wii(){
+        if(matchL("wii") && x() && matchL(":") && expre() && matchL("?") && matchL("confractus") && matchL("?") && y()){
+            return true;
+        }
+        erro("wii");
+        return false;
+    }
+
+    public boolean x(){
+        if(matchT("ID") || matchT("FRASE") || matchT("NUM")){
+            return true;
+        }
+        erro("x");
+        return false;
+    }
+
+    public boolean y(){
+        if( (matchL("vexillum") && matchL(":") && expre() && matchL("?")) || wii()){
+            return true;
+        }
+        erro("y");
+        return false;
+    }
        
     
-    //compara lexema
+    //_____________Compara Lexema______________
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-        // System.out.println("Entrada: " + lexema);
+        // System.out.println("Necessario: " + lexema);
         // System.out.println("Lexema: " + token.getLexema());
+        // System.out.println("Token: " + token);
+        // System.err.println();
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -243,12 +278,14 @@ public class Parser {
         return false;
     }
 
-    //compara tipo
+    //_____________Compara Tipo______________
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-        // System.out.println("Entrada: " + tipo);
+        // System.out.println("Necessario: " + tipo);
         // System.out.println("Tipo: " + token.getTipo());
+        // System.out.println("Token: " + token);
+        // System.err.println();
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();

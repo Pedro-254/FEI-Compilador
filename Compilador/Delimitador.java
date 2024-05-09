@@ -25,6 +25,9 @@ public class Delimitador extends AFD {
             case '?':
                 code.next();
                 return new Token("FIM", "?");
+            case ':':
+                code.next();
+                return new Token("DOIS_PONTOS", ":");
             default:
                 return null;
         }
