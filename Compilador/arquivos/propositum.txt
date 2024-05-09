@@ -1,0 +1,3 @@
+propositum (miseratio x <- 0? x < 10? x++){
+    miseratio y <- 3.4?         
+}
