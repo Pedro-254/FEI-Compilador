@@ -33,6 +33,32 @@ public class Parser {
 
     }
 
+    //______________________BLOCO__________________________
+    // public boolean bloco(){
+    //     if (reditus() || ) {
+            
+    //     }
+    // }
+
+    //**************ERRO******************
+    // Ao implementar isso verificar se tem metodos que utilizam ele e se precisam do veritipo
+    public boolean atribui(){
+        if(veritipo() /*PODE NAO TER TIPO*/ && matchT("ID") && matchT("ATRIBUICAO") && dado() && matchT("FIM")){
+            return true;
+        }
+        erro("atribui");
+        return false;
+    }
+
+    public boolean dado(){
+        if(matchT("FRASE") ||  expre() /* PODE TER ATRIBUIÇÃO DE VARIAVEL TBM */){
+            return true;
+        }
+        erro("result"); 
+        return false;
+    }
+
+    //_____________ Reditus (Return) _____________
     public boolean reditus(){
         if(matchL("reditus") && var()){
             return true;
@@ -41,17 +67,20 @@ public class Parser {
         return false;
     }
 
+    //**************ERRO******************
     public boolean var(){
-        if(matchT("FRASE") || matchT("NUM") || matchL("inanis") && matchL("?")){
+        if((matchT("FRASE") || matchT("NUM") || matchL("inanis") /* FALTA VARIAVEL */) && matchL("?")){
             return true;
         }
         erro("var");
         return false;
     }
 
+    //______________ Propositum (FOR) _______________
+    //**************ERRO******************
     public boolean propositum(){
         if(matchL("propositum") && matchL("(") && atribui() && condição() && atualiza() && matchL(")")
-         && matchL("{") && atribui() && matchL("}")){
+         && matchL("{") && atribui() /* BLOCO */ && matchL("}")){
             return true;
         }
         erro("propositum");
@@ -65,6 +94,8 @@ public class Parser {
         erro("atualiza");
         return false;
     }
+
+    //__________________Dicere_____________________
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
@@ -103,6 +134,8 @@ public class Parser {
         return true;
     }
     
+
+    //*********************************** NAO ENCONTREI A PARTE DE COMENTARIO ***************************
     public boolean noncoment(){
         if (matchT("COMENTARIO")){
             return true;
@@ -110,20 +143,13 @@ public class Parser {
         return false;
     }
     
+    //_________________While_________________
+    //**************ERRO******************
     public boolean dum(){
-        if (matchL("dum") && matchL("(") && condição() && matchL(")") && matchL("{") && atribui() && matchL("}")){
+        if (matchL("dum") && matchL("(") && condição() && matchL(")") && matchL("{") && atribui() /* BLOCO */ && matchL("}")){
             return true;
         }
         erro("dum");
-        return false;
-    }
-
-
-    public boolean atribui(){
-        if(veritipo()&& matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
-            return true;
-        }
-        erro("atribui");
         return false;
     }
     
@@ -136,14 +162,9 @@ public class Parser {
     }
 
 
-    public boolean result(){
-        if(matchT("FRASE") ||  expre()){
-            return true;
-        }
-        erro("result"); 
-        return false;
-    }
 
+
+    //__________________Expressao______________________
     public boolean expre(){
         if (tato() && exp2()){
             return true;
@@ -208,6 +229,7 @@ public class Parser {
         return false;
     }
     
+    //???????????????????????????????????pausei de analisar aqui?????????????????????????????????????????????????
     public boolean condição(){
         if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM")) && matchL("?")|| matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
             // token = getNexToken();
@@ -263,7 +285,7 @@ public class Parser {
        
     //_____________if else__________________
 
-public boolean e_oppositum(){
+    public boolean e_oppositum(){
         if(matchL("oppositum") && matchL("{") && contif() && matchL("}")){
             return true;
         }
