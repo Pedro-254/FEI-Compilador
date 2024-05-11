@@ -23,7 +23,7 @@ public class Parser {
 
     public void main(){
         token = getNexToken();
-        if(nintendum()){
+        if(i_si()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -261,15 +261,55 @@ public class Parser {
         return false;
     }
        
-    
+    //_____________if else__________________
+
+public boolean e_oppositum(){
+        if(matchL("oppositum") && matchL("{") && contif() && matchL("}")){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean i_si(){
+        if(matchL("si") && matchL("(") && condição() && matchL(")") && matchL("{") && contif() && matchL("}") && addcond()){
+            return true;
+        }
+        return false;
+    }
+
+    //y do if - após o primeiro if, possibilita if/else/vazio
+    public boolean addcond(){
+        if(e_oppositum()){
+            return true;
+        }
+        return true;
+    }
+
+    //actual atrubuição - atribui valor a uma var previamente declarada 
+    public boolean atribuicao(){
+        if(matchT("ID") && matchL("<-") && matchT("ID") || matchT("NUM") && matchL("?")){
+            return true;
+        }
+        return false;
+    }
+
+    // atribuicao2, expressão, atribui(declara)...
+    public boolean contif(){
+        if(atribuicao() || expre() || atribui() ){
+            return true;
+        }
+        return false;
+    }
+
+
     //_____________Compara Lexema______________
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-        // System.out.println("Necessario: " + lexema);
-        // System.out.println("Lexema: " + token.getLexema());
-        // System.out.println("Token: " + token);
-        // System.err.println();
+         System.out.println("Necessario: " + lexema);
+         System.out.println("Lexema: " + token.getLexema());
+         System.out.println("Token: " + token);
+         System.err.println();
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -282,10 +322,10 @@ public class Parser {
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-        // System.out.println("Necessario: " + tipo);
-        // System.out.println("Tipo: " + token.getTipo());
-        // System.out.println("Token: " + token);
-        // System.err.println();
+         System.out.println("Necessario: " + tipo);
+         System.out.println("Tipo: " + token.getTipo());
+         System.out.println("Token: " + token);
+         System.err.println();
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();
