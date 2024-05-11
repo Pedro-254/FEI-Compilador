@@ -1,17 +1,35 @@
-miseratio x1 <- 1.0?
+miseratio x?
+x <- 2?
 
-miseratio y2 <- 9.0?
-filum z <- | Eu como terra |?
+miseratio y?
+y <- 2?
 
-si(x1 <=> y2){
-    dicere(|Igual|, x1, |=|,y2)?
-}
+totum i?
+propositum (i <- 0? i <= 3? i++){
+    si(x <=> 2){
+        si(y <=> 3){
+            x <- x + y?
+        }
+        si(x <=> 3){
+            x <- x + 2*y?
+        }
+        oppositum{
+            x <- 3*x+2/(2*y)?
+        } 
 
-si(x1 > y2){
-    dicere(x ,|é Maior|)?
-}
-
-
-si(x1 < y2){
-    dicere(|Maior é|, y2)?
+        nintendum(x){
+            wii 1 : 
+                si(y <=> 3){
+                    x <- x + y?
+                }
+                confractus?
+            wii 2 : 
+                y <- 2?
+                confractus?
+            vexillum: 
+                y <- x-y?
+        }
+    }oppositum{
+        x <- 3?
+    }    
 }
