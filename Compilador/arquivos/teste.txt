@@ -1,0 +1,17 @@
+miseratio x1 <- 1.0?
+
+miseratio y2 <- 9.0?
+filum z <- | Eu como terra |?
+
+si(x1 <=> y2){
+    dicere(|Igual|, x1, |=|,y2)?
+}
+
+si(x1 > y2){
+    dicere(x ,|é Maior|)?
+}
+
+
+si(x1 < y2){
+    dicere(|Maior é|, y2)?
+}
