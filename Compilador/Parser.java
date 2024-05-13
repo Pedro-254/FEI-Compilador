@@ -17,9 +17,9 @@ public class Parser {
 
     private void erro(String regra){
 
-        System.out.println("Regra: " + regra);
-        System.out.println("Token inválido: " + token.getLexema());
-        System.out.println();
+        // System.out.println("Regra: " + regra);
+        // System.out.println("Token inválido: " + token.getLexema());
+        // System.out.println();
         // System.exit(0);
     }
 
@@ -345,10 +345,10 @@ public class Parser {
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-         System.out.println("Necessario: " + lexema);
-         System.out.println("Lexema: " + token.getLexema());
-         System.out.println("Token: " + token);
-         System.err.println();
+        //  System.out.println("Necessario: " + lexema);
+        //  System.out.println("Lexema: " + token.getLexema());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -361,10 +361,10 @@ public class Parser {
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-         System.out.println("Necessario: " + tipo);
-         System.out.println("Tipo: " + token.getTipo());
-         System.out.println("Token: " + token);
-         System.err.println();
+        //  System.out.println("Necessario: " + tipo);
+        //  System.out.println("Tipo: " + token.getTipo());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();
