@@ -1,0 +1,29 @@
+auditio(N)?  noncommento Pergunta ao usuário o valor de N oblivion
+
+somaPares <- 0 ?  noncommento Inicializa a soma dos pares como 0 oblivion
+somaImpares <- 0 ?  noncommento Inicializa a soma dos ímpares como 0 oblivion
+
+propositum (i <- 1? i <= N? i++){  noncommento Loop for para percorrer de 1 até N oblivion
+    nintendum(i){  noncommento Inicia o switch case para verificar se o número é par ou ímpar oblivion
+        wii 0 :  noncommento Caso o número seja 0 oblivion
+            somaPares <- somaPares + i?  noncommento Soma o número aos pares oblivion
+            confractus?  noncommento Sai do switch case oblivion
+        wii 2 :  noncommento Caso o número seja par oblivion
+            somaPares <- somaPares + i?  noncommento Soma o número aos pares oblivion
+            confractus?  noncommento Sai do switch case oblivion
+        wii 1 :  noncommento Caso o número seja ímpar oblivion
+            somaImpares <- somaImpares + i?  noncommento Soma o número aos ímpares oblivion
+            confractus?  noncommento Sai do switch case oblivion
+        vexillum:  noncommento Caso não seja nenhum dos anteriores (default) oblivion
+            noncommento Não faz nada, apenas continua o loop oblivion
+    }
+}
+
+si(somaPares > somaImpares){  noncommento Verifica se a soma dos pares é maior que a soma dos ímpares oblivion
+    dicere(|"A soma dos números pares é maior"|)?  noncommento Se sim, imprime que a soma dos pares é maior oblivion
+}
+oppositum{  noncommento Senão oblivion
+    dicere(|"A soma dos números ímpares é maior ou igual"|)?  noncommento Imprime que a soma dos ímpares é maior ou igual
+}
+
+reditus inanis?  noncommento Retorna null para finalizar o programa oblivion

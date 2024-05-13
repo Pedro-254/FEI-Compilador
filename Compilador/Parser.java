@@ -37,7 +37,7 @@ public class Parser {
 
     //______________________BLOCO__________________________
     public boolean bloco(){
-        if ((atribui() || declara() || reditus() ||  propositum() || dicere() || dum() || Input() || nintendum() || i_si()) && bloco()) {
+        if ((atribui() || declara() || reditus() ||  propositum() || dicere() || dum() || Input() || nintendum() || i_si() || matchT("COMENTARIO")) && bloco()) {
             return true;
         }
 
@@ -274,13 +274,19 @@ public class Parser {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum") && matchL("(") && ID_FRASE_NUM() && matchL(")") && matchL("{") && wii() && matchL("}")){
+        if(matchL("nintendum") && matchL("(") && ID_FRASE_NUM() && matchL(")") && matchL("{") && comentario_wii() && wii() && matchL("}")){
             return true;
         } 
         erro("nintendum");
         return false;
     }
 
+    public boolean comentario_wii(){
+        if (matchT("COMENTARIO")) {
+            return true;
+        }
+        return true;
+    }
     public boolean wii(){
         if(matchL("wii") && ID_FRASE_NUM() && matchL(":") && bloco() && matchL("confractus") && matchL("?") && continuawii()){
             return true;
@@ -289,6 +295,13 @@ public class Parser {
         return false;
     }
 
+    public boolean continuawii(){
+        if( comentario_wii() && (matchL("vexillum") && matchL(":") && bloco()) || wii()){
+            return true;
+        }
+        erro("y");
+        return false;
+    }
 
     public boolean ID_FRASE_NUM(){
         if(matchT("ID") || matchT("FRASE") || matchT("NUM")){
@@ -298,13 +311,7 @@ public class Parser {
         return false;
     }
 
-    public boolean continuawii(){
-        if( (matchL("vexillum") && matchL(":") && bloco()) || wii()){
-            return true;
-        }
-        erro("y");
-        return false;
-    }
+    
        
     //_____________if else__________________
 
