@@ -262,8 +262,7 @@ public class Parser {
 
     //_______ Input ________
     public boolean Input(){
-        if(matchT("INPUT") && matchL("(") && matchT("ID") && matchL(")") && matchL("?")){
-
+        if(testematchT("INPUT","scanf") && testematchL("(","(") && traduz("\"%d\",&") && testematchT("ID",token.getLexema()) && testematchL(")",")") && testematchL("?", ";")){
             return true;
             
         }
@@ -373,4 +372,45 @@ public class Parser {
         return false;
     }
 
+    //_____________Compara Lexema______________
+    public boolean testematchL(String lexema, String code){
+
+        // _____ Código para debug _____
+        //  System.out.println("Necessario: " + lexema);
+        //  System.out.println("Lexema: " + token.getLexema());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
+        
+        if(token.getLexema().equals(lexema)){
+            traduz(code);
+            token = getNexToken();
+            return true;
+        }
+        return false;
+    }
+
+    //_____________Compara Tipo______________
+    public boolean testematchT(String tipo, String code){
+
+        // _____ Código para debug _____
+        //  System.out.println("Necessario: " + tipo);
+        //  System.out.println("Tipo: " + token.getTipo());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
+
+        if(token.getTipo().equals(tipo)){
+            traduz(code);
+            token = getNexToken();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean traduz(String s){
+        System.out.print(s);
+        if (s.equals(";")) {
+            System.out.print("\n");
+        }
+        return true;
+    }
 }
