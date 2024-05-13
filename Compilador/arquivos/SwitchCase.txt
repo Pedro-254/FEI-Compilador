@@ -5,7 +5,7 @@ somaImpares <- 0 ?  noncommento Inicializa a soma dos ímpares como 0 oblivion
 
 propositum (i <- 1? i <= N? i++){  noncommento Loop for para percorrer de 1 até N oblivion
     nintendum(i){  noncommento Inicia o switch case para verificar se o número é par ou ímpar oblivion
-        wii 0 :  noncommento Caso o número seja 0 oblivion
+        wii 0:  noncommento Caso o número seja 0 oblivion
             somaPares <- somaPares + i?  noncommento Soma o número aos pares oblivion
             confractus?  noncommento Sai do switch case oblivion
         wii 2 :  noncommento Caso o número seja par oblivion
@@ -15,6 +15,7 @@ propositum (i <- 1? i <= N? i++){  noncommento Loop for para percorrer de 1 até
             somaImpares <- somaImpares + i?  noncommento Soma o número aos ímpares oblivion
             confractus?  noncommento Sai do switch case oblivion
         vexillum:  noncommento Caso não seja nenhum dos anteriores (default) oblivion
+            reditus inanis?
             noncommento Não faz nada, apenas continua o loop oblivion
     }
 }
