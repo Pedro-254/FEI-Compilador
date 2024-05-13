@@ -16,14 +16,16 @@ public class Parser {
     }
 
     private void erro(String regra){
-        System.out.println("Regra: " + regra);
-        System.out.println("Token inválido: " + token.getLexema());
-        System.exit(0);
+
+        // System.out.println("Regra: " + regra);
+        // System.out.println("Token inválido: " + token.getLexema());
+        // System.out.println();
+        // System.exit(0);
     }
 
     public void main(){
         token = getNexToken();
-        if(i_si()){
+        if(bloco()){
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
             }else{
@@ -33,6 +35,55 @@ public class Parser {
 
     }
 
+    //______________________BLOCO__________________________
+    public boolean bloco(){
+        if ((atribui() || declara() || reditus() ||  propositum() || dicere() || dum() || Input() || nintendum() || i_si() || matchT("COMENTARIO")) && bloco()) {
+            return true;
+        }
+
+        return true;
+    }
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //Ao criar o declara, deu problema com o atribui, então para corrigir o erro eu fiz que para declarar tem que colocar o tipo da 
+    //variavel e para atribuir não pode colocar o tipo da variavel
+
+    //____________________Declara_________________________
+    public boolean declara(){
+        if(tipo() && matchT("ID") && matchT("FIM")){
+            return true;
+        }
+        erro("declara");
+        return false;
+    }
+
+    public boolean tipo(){
+        if(matchT("INT") || matchT("FLOAT") || matchT("STRING") || matchT("BOOLEAN")){
+            return true;
+        }
+        // erro("veritipo");
+        // Vazio
+        return false;
+    }
+
+    //____________________Atribui__________________________
+    public boolean atribui(){
+        if(matchT("ID") && matchT("ATRIBUICAO") && dado() && matchT("FIM")){
+            return true;
+        }
+        erro("atribui");
+        return false;
+    }
+
+    public boolean dado(){
+        if(matchT("FRASE") ||  expre() || matchT("ID") || matchT("NUM")){
+            return true;
+        }
+        erro("result"); 
+        return false;
+    }
+
+    //_____________ Reditus (Return) _____________
     public boolean reditus(){
         if(matchL("reditus") && var()){
             return true;
@@ -42,16 +93,17 @@ public class Parser {
     }
 
     public boolean var(){
-        if(matchT("FRASE") || matchT("NUM") || matchL("inanis") && matchL("?")){
+        if((matchT("FRASE") || matchT("NUM") || matchL("inanis") || matchT("ID")) && matchL("?")){
             return true;
         }
         erro("var");
         return false;
     }
 
+    //______________ Propositum (FOR) _______________
     public boolean propositum(){
-        if(matchL("propositum") && matchL("(") && atribui() && condição() && atualiza() && matchL(")")
-         && matchL("{") && atribui() && matchL("}")){
+        if(matchL("propositum") && matchL("(") && atribui() && condição() && matchL("?") && atualiza() && matchL(")")
+         && matchL("{") && bloco() && matchL("}")){
             return true;
         }
         erro("propositum");
@@ -65,6 +117,8 @@ public class Parser {
         erro("atualiza");
         return false;
     }
+
+    //__________________Dicere_____________________
 
     public boolean dicere(){
         if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
@@ -103,6 +157,8 @@ public class Parser {
         return true;
     }
     
+
+    //_______________Comentario_________________
     public boolean noncoment(){
         if (matchT("COMENTARIO")){
             return true;
@@ -110,8 +166,9 @@ public class Parser {
         return false;
     }
     
+    //_________________While_________________
     public boolean dum(){
-        if (matchL("dum") && matchL("(") && condição() && matchL(")") && matchL("{") && atribui() && matchL("}")){
+        if (matchL("dum") && matchL("(") && condição() && matchL(")") && matchL("{") && bloco() && matchL("}")){
             return true;
         }
         erro("dum");
@@ -119,31 +176,7 @@ public class Parser {
     }
 
 
-    public boolean atribui(){
-        if(veritipo()&& matchT("ID") && matchT("ATRIBUICAO") && result() && matchT("FIM")){
-            return true;
-        }
-        erro("atribui");
-        return false;
-    }
-    
-    public boolean veritipo(){
-        if(matchT("INT") || matchT("FLOAT") || matchT("STRING") || matchT("BOOLEAN")){
-            return true;
-        }
-        erro("veritipo");
-        return false;
-    }
-
-
-    public boolean result(){
-        if(matchT("FRASE") ||  expre()){
-            return true;
-        }
-        erro("result"); 
-        return false;
-    }
-
+    //__________________Expressao______________________
     public boolean expre(){
         if (tato() && exp2()){
             return true;
@@ -208,8 +241,19 @@ public class Parser {
         return false;
     }
     
+    //!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!
+    //Exemplo: propositum (i <- 0? i <= y+2? i++){
+    // Condição não aceita expressão como entrada
     public boolean condição(){
-        if(matchT("ID") && compara() && (matchT("ID") || matchT("NUM")) && matchL("?")|| matchT("ID") && compara() && (matchT("ID") || matchT("NUM"))){
+        if(ID_NUM() && compara() && ID_NUM()){
+            // token = getNexToken();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ID_NUM(){
+        if(matchT("ID") || matchT("NUM")){
             // token = getNexToken();
             return true;
         }
@@ -230,22 +274,36 @@ public class Parser {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum") && matchL("(") && matchT("ID") && matchL(")") && matchL("{") && wii() && matchL("}")){
+        if(matchL("nintendum") && matchL("(") && ID_FRASE_NUM() && matchL(")") && matchL("{") && comentario_wii() && wii() && matchL("}")){
             return true;
         } 
         erro("nintendum");
         return false;
     }
 
+    public boolean comentario_wii(){
+        if (matchT("COMENTARIO")) {
+            return true;
+        }
+        return true;
+    }
     public boolean wii(){
-        if(matchL("wii") && x() && matchL(":") && expre() && matchL("?") && matchL("confractus") && matchL("?") && y()){
+        if(matchL("wii") && ID_FRASE_NUM() && matchL(":") && bloco() && matchL("confractus") && matchL("?") && continuawii()){
             return true;
         }
         erro("wii");
         return false;
     }
 
-    public boolean x(){
+    public boolean continuawii(){
+        if( comentario_wii() && (matchL("vexillum") && matchL(":") && bloco()) || wii()){
+            return true;
+        }
+        erro("y");
+        return false;
+    }
+
+    public boolean ID_FRASE_NUM(){
         if(matchT("ID") || matchT("FRASE") || matchT("NUM")){
             return true;
         }
@@ -253,25 +311,19 @@ public class Parser {
         return false;
     }
 
-    public boolean y(){
-        if( (matchL("vexillum") && matchL(":") && expre() && matchL("?")) || wii()){
-            return true;
-        }
-        erro("y");
-        return false;
-    }
+    
        
     //_____________if else__________________
 
-public boolean e_oppositum(){
-        if(matchL("oppositum") && matchL("{") && contif() && matchL("}")){
+    public boolean e_oppositum(){
+        if(matchL("oppositum") && matchL("{") && bloco() && matchL("}")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si") && matchL("(") && condição() && matchL(")") && matchL("{") && contif() && matchL("}") && addcond()){
+        if(matchL("si") && matchL("(") && condição() && matchL(")") && matchL("{") && bloco() && matchL("}") && addcond()){
             return true;
         }
         return false;
@@ -285,31 +337,18 @@ public boolean e_oppositum(){
         return true;
     }
 
-    //actual atrubuição - atribui valor a uma var previamente declarada 
-    public boolean atribuicao(){
-        if(matchT("ID") && matchL("<-") && matchT("ID") || matchT("NUM") && matchL("?")){
-            return true;
-        }
-        return false;
-    }
 
-    // atribuicao2, expressão, atribui(declara)...
-    public boolean contif(){
-        if(atribuicao() || expre() || atribui() ){
-            return true;
-        }
-        return false;
-    }
+
 
 
     //_____________Compara Lexema______________
     public boolean matchL(String lexema){
 
         // _____ Código para debug _____
-         System.out.println("Necessario: " + lexema);
-         System.out.println("Lexema: " + token.getLexema());
-         System.out.println("Token: " + token);
-         System.err.println();
+        //  System.out.println("Necessario: " + lexema);
+        //  System.out.println("Lexema: " + token.getLexema());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
         
         if(token.getLexema().equals(lexema)){
             token = getNexToken();
@@ -322,10 +361,10 @@ public boolean e_oppositum(){
     public boolean matchT(String tipo){
 
         // _____ Código para debug _____
-         System.out.println("Necessario: " + tipo);
-         System.out.println("Tipo: " + token.getTipo());
-         System.out.println("Token: " + token);
-         System.err.println();
+        //  System.out.println("Necessario: " + tipo);
+        //  System.out.println("Tipo: " + token.getTipo());
+        //  System.out.println("Token: " + token);
+        //  System.err.println();
 
         if(token.getTipo().equals(tipo)){
             token = getNexToken();

@@ -1,3 +1,0 @@
-dum (x <=> z){
-    miseratio y <- 3.4? 
-}
