@@ -76,7 +76,7 @@ public class Parser {
     }
 
     public boolean dado(){
-        if(matchT("FRASE") ||  expre() || matchT("ID") || matchT("NUM")){
+        if(matchT("FRASE") ||  expre()){
             return true;
         }
         erro("result"); 
