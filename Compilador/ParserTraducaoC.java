@@ -1,10 +1,10 @@
 import java.util.List;
 
-public class Parser {
+public class ParserTraducaoC {
     List<Token> tokens;
     Token token;
 
-    public Parser(List<Token> tokens) {
+    public ParserTraducaoC(List<Token> tokens) {
         this.tokens = tokens;
     }
 
@@ -17,10 +17,10 @@ public class Parser {
 
     private void erro(String regra){
 
-        // System.out.println("Regra: " + regra);
-        // System.out.println("Token inválido: " + token.getLexema());
-        // System.out.println();
-        // System.exit(0);
+        System.out.println("Regra: " + regra);
+        System.out.println("Token inválido: " + token.getLexema());
+        System.out.println();
+        System.exit(0);
     }
 
     public void main(){
@@ -37,8 +37,33 @@ public class Parser {
 
     //______________________BLOCO__________________________
     public boolean bloco(){
-        if ((atribui() || declara() || reditus() ||  propositum() || dicere() || dum() || Input() || nintendum() || i_si() || matchT("COMENTARIO")) && bloco()) {
-            return true;
+        if (token.getTipo().equals("ID") && bloco()) {
+            atribui();
+        }
+        else if (token.getTipo().equals("INT") && bloco()) {
+            declara();
+        }
+        else if (token.getLexema().equals("reditus") && bloco()){
+            reditus();
+        }
+        else if (token.getLexema().equals("propositum") && bloco()) {
+            propositum();
+        }
+        else if (token.getLexema().equals("dicere") && bloco()) {
+            
+        }else if (token.getLexema().equals("dum") && bloco()) {
+            dum();
+        }
+        else if(token.getTipo().equals("INPUT") && bloco()){
+            Input();
+        }
+        else if (token.getLexema().equals("nintendum") && bloco()) {
+            nintendum();
+        }
+        else if (token.getLexema().equals("si") && bloco()) {
+            i_si();
+        }else if (token.getTipo().equals("COMENTARIO")) {
+            matchT("COMENTARIO","");
         }
 
         return true;
@@ -50,7 +75,7 @@ public class Parser {
 
     //____________________Declara_________________________
     public boolean declara(){
-        if(tipo() && matchT("ID") && matchT("FIM")){
+        if(tipo() && matchT("ID","") && matchT("FIM","")){
             return true;
         }
         erro("declara");
@@ -58,7 +83,7 @@ public class Parser {
     }
 
     public boolean tipo(){
-        if(matchT("INT") || matchT("FLOAT") || matchT("STRING") || matchT("BOOLEAN")){
+        if(matchT("INT","") || matchT("FLOAT","") || matchT("STRING","") || matchT("BOOLEAN","")){
             return true;
         }
         // erro("veritipo");
@@ -68,7 +93,7 @@ public class Parser {
 
     //____________________Atribui__________________________
     public boolean atribui(){
-        if(matchT("ID") && matchT("ATRIBUICAO") && dado() && matchT("FIM")){
+        if(matchT("ID","") && matchT("ATRIBUICAO","") && dado() && matchT("FIM","")){
             return true;
         }
         erro("atribui");
@@ -76,7 +101,7 @@ public class Parser {
     }
 
     public boolean dado(){
-        if(matchT("FRASE") ||  expre()){
+        if(matchT("FRASE","") ||  expre()){
             return true;
         }
         erro("result"); 
@@ -85,7 +110,7 @@ public class Parser {
 
     //_____________ Reditus (Return) _____________
     public boolean reditus(){
-        if(matchL("reditus") && var()){
+        if(matchL("reditus","") && var()){
             return true;
         }
         erro("reditus");
@@ -93,7 +118,7 @@ public class Parser {
     }
 
     public boolean var(){
-        if((matchT("FRASE") || matchT("NUM") || matchL("inanis") || matchT("ID")) && matchL("?")){
+        if((matchT("FRASE","") || matchT("NUM","") || matchL("inanis","") || matchT("ID","")) && matchL("?","")){
             return true;
         }
         erro("var");
@@ -102,8 +127,8 @@ public class Parser {
 
     //______________ Propositum (FOR) _______________
     public boolean propositum(){
-        if(matchL("propositum") && matchL("(") && atribui() && condição() && matchL("?") && atualiza() && matchL(")")
-         && matchL("{") && bloco() && matchL("}")){
+        if(matchL("propositum","") && matchL("(","") && atribui() && condição() && matchL("?","") && atualiza() && matchL(")","")
+         && matchL("{","") && bloco() && matchL("}","")){
             return true;
         }
         erro("propositum");
@@ -111,7 +136,7 @@ public class Parser {
     }  
 
     public boolean atualiza(){
-        if(matchT("ID") && matchL("+") && matchL("+")){
+        if(matchT("ID","") && matchL("+","") && matchL("+","")){
             return true;
         }
         erro("atualiza");
@@ -121,7 +146,7 @@ public class Parser {
     //__________________Dicere_____________________
 
     public boolean dicere(){
-        if(matchL("dicere") && matchL("(") && printado() && matchL(")") && matchT("FIM")){
+        if(matchL("dicere","") && matchL("(","") && printado() && matchL(")","") && matchT("FIM","")){
             return true;
         }
         erro("dicere");
@@ -139,7 +164,7 @@ public class Parser {
     }
 
     public boolean IDSTRING(){
-        if(matchT("ID") || matchT("FRASE")){
+        if(matchT("ID","") || matchT("FRASE","")){
             // token = getNexToken();
             return true;
         }
@@ -149,7 +174,7 @@ public class Parser {
 
     // y de dicere
     public boolean multiprintado(){
-        if((matchT("VIRGULA") && IDSTRING() && multiprintado())){
+        if((matchT("VIRGULA","") && IDSTRING() && multiprintado())){
             // token = getNexToken();
             return true;
         }
@@ -160,7 +185,7 @@ public class Parser {
 
     //_______________Comentario_________________
     public boolean noncoment(){
-        if (matchT("COMENTARIO")){
+        if (matchT("COMENTARIO","")){
             return true;
         }
         return false;
@@ -168,7 +193,7 @@ public class Parser {
     
     //_________________While_________________
     public boolean dum(){
-        if (matchL("dum") && matchL("(") && condição() && matchL(")") && matchL("{") && bloco() && matchL("}")){
+        if (matchL("dum","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","")){
             return true;
         }
         erro("dum");
@@ -210,7 +235,7 @@ public class Parser {
     }
 
     public boolean fator(){
-        if (matchT("ID") || matchT("NUM") || matchT("FLUTUANTE") || matchL("(") && expre() && matchL(")")){
+        if (matchT("ID","") || matchT("NUM","") || matchT("FLUTUANTE","") || matchL("(","") && expre() && matchL(")","")){
             return true;
         }
         erro("fator");
@@ -218,7 +243,7 @@ public class Parser {
     }
 
     public boolean somamenos(){
-        if (matchL("+") || matchL("-")){
+        if (matchL("+","") || matchL("-","")){
             return true;
         }
         // erro("somamenos");
@@ -226,7 +251,7 @@ public class Parser {
     }
 
     public boolean multidiv(){
-        if (matchL("*") || matchL("/")){
+        if (matchL("*","") || matchL("/","")){
             return true;
         }
         // erro("multidiv");
@@ -234,7 +259,7 @@ public class Parser {
     }
     
     public boolean compara(){
-        if(matchL("<") || matchL(">") || matchL("<=") || matchL(">=") || matchL("<>") || matchL("<=>")){
+        if(matchL("<","") || matchL(">","") || matchL("<=","") || matchL(">=","") || matchL("<>","") || matchL("<=>","")){
             //token = getNexToken();
             return true;
         }
@@ -253,7 +278,7 @@ public class Parser {
     }
 
     public boolean ID_NUM(){
-        if(matchT("ID") || matchT("NUM")){
+        if(matchT("ID","") || matchT("NUM","")){
             // token = getNexToken();
             return true;
         }
@@ -262,7 +287,7 @@ public class Parser {
 
     //_______ Input ________
     public boolean Input(){
-        if(testematchT("INPUT","scanf") && testematchL("(","(") && traduz("\"%d\",&") && testematchT("ID",token.getLexema()) && testematchL(")",")") && testematchL("?", ";")){
+        if(matchT("INPUT","scanf") && matchL("(","(") && traduz("\"%d\",&") && matchT("ID",token.getLexema()) && matchL(")",")") && matchL("?", ";")){
             return true;
             
         }
@@ -273,7 +298,7 @@ public class Parser {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum") && matchL("(") && ID_FRASE_NUM() && matchL(")") && matchL("{") && comentario_wii() && wii() && matchL("}")){
+        if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
             return true;
         } 
         erro("nintendum");
@@ -281,13 +306,13 @@ public class Parser {
     }
 
     public boolean comentario_wii(){
-        if (matchT("COMENTARIO")) {
+        if (matchT("COMENTARIO","")) {
             return true;
         }
         return true;
     }
     public boolean wii(){
-        if(matchL("wii") && ID_FRASE_NUM() && matchL(":") && bloco() && matchL("confractus") && matchL("?") && continuawii()){
+        if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
             return true;
         }
         erro("wii");
@@ -295,7 +320,7 @@ public class Parser {
     }
 
     public boolean continuawii(){
-        if( comentario_wii() && (matchL("vexillum") && matchL(":") && bloco()) || wii()){
+        if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
             return true;
         }
         erro("y");
@@ -303,7 +328,7 @@ public class Parser {
     }
 
     public boolean ID_FRASE_NUM(){
-        if(matchT("ID") || matchT("FRASE") || matchT("NUM")){
+        if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
             return true;
         }
         erro("x");
@@ -315,14 +340,14 @@ public class Parser {
     //_____________if else__________________
 
     public boolean e_oppositum(){
-        if(matchL("oppositum") && matchL("{") && bloco() && matchL("}")){
+        if(matchL("oppositum","") && matchL("{","") && bloco() && matchL("}","")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si") && matchL("(") && condição() && matchL(")") && matchL("{") && bloco() && matchL("}") && addcond()){
+        if(matchL("si","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","") && addcond()){
             return true;
         }
         return false;
@@ -336,44 +361,8 @@ public class Parser {
         return true;
     }
 
-
-
-
-
     //_____________Compara Lexema______________
-    public boolean matchL(String lexema){
-
-        // _____ Código para debug _____
-        //  System.out.println("Necessario: " + lexema);
-        //  System.out.println("Lexema: " + token.getLexema());
-        //  System.out.println("Token: " + token);
-        //  System.err.println();
-        
-        if(token.getLexema().equals(lexema)){
-            token = getNexToken();
-            return true;
-        }
-        return false;
-    }
-
-    //_____________Compara Tipo______________
-    public boolean matchT(String tipo){
-
-        // _____ Código para debug _____
-        //  System.out.println("Necessario: " + tipo);
-        //  System.out.println("Tipo: " + token.getTipo());
-        //  System.out.println("Token: " + token);
-        //  System.err.println();
-
-        if(token.getTipo().equals(tipo)){
-            token = getNexToken();
-            return true;
-        }
-        return false;
-    }
-
-    //_____________Compara Lexema______________
-    public boolean testematchL(String lexema, String code){
+    public boolean matchL(String lexema, String code){
 
         // _____ Código para debug _____
         //  System.out.println("Necessario: " + lexema);
@@ -390,7 +379,7 @@ public class Parser {
     }
 
     //_____________Compara Tipo______________
-    public boolean testematchT(String tipo, String code){
+    public boolean matchT(String tipo, String code){
 
         // _____ Código para debug _____
         //  System.out.println("Necessario: " + tipo);
