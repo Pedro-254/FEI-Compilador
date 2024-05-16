@@ -138,7 +138,7 @@ public class ParserTraducaoJAVA {
 
     //_____________ Reditus (Return) _____________
     public boolean reditus(){
-        if(matchL("reditus","") && var()){
+        if(matchL("reditus","return") && var()){
             return true;
         }
         erro("reditus");
@@ -146,7 +146,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean var(){
-        if((matchT("FRASE","") || matchT("NUM","") || matchL("inanis","") || matchT("ID","")) && matchL("?","")){
+        if((matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema()) || matchL("inanis","NULL") || matchT("ID",token.getLexema())) && matchL("?",";")){
             return true;
         }
         erro("var");
@@ -154,17 +154,38 @@ public class ParserTraducaoJAVA {
     }
 
     //______________ Propositum (FOR) _______________
+    private boolean InnerLoop = false;
+    private boolean moremore = false;
+
     public boolean propositum(){
-        if(matchL("propositum","") && matchL("(","") && atribui() && condição() && matchL("?","") && atualiza() && matchL(")","")
-         && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("propositum","for") && startForLoop() && atribui() && condição() && matchL("?",";") && atualiza() && finishForLoop()
+         && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         erro("propositum");
         return false;
-    }  
+    } 
+    
+    public boolean startForLoop(){
+        if(matchL("(", "(")){
+            InnerLoop = true;
+            return true;
+        }
+        erro("startForLoop");
+        return false;   
+    }
+
+    public boolean finishForLoop(){
+        if(matchL(")", ")")){
+            InnerLoop = false;
+            return true;
+        }
+        erro("finishForLoop");
+        return false;   
+    }
 
     public boolean atualiza(){
-        if(matchT("ID","") && matchL("+","") && matchL("+","")){
+        if(matchT("ID",token.getLexema()) && matchL("+","+") && matchL("+","+")){
             return true;
         }
         erro("atualiza");
@@ -422,15 +443,19 @@ public class ParserTraducaoJAVA {
         return false;
     }
     
-    public boolean traduz(String s){
-
-
+    public boolean traduz(String s) {
         //__________Pulando Linha_____________
-        if(s.equals(";") || s.equals("}") || s.equals("{")){
-            s += "\n";
+        if (s.equals(";") || s.equals("{")) {
+            if (!InnerLoop) {
+                s += "\n";
+            }
         }
         
-
+        if (s.equals("}")) {
+            s = "\n" + s.trim() + "\n";
+        }
+        
+        
         //__________Tradução Comentario__________
         if(s.contains("|")){
             s = s.replace("|", "\"");
@@ -439,6 +464,11 @@ public class ParserTraducaoJAVA {
             s = s.replace("noncommento", "//");
             s = s.replace("oblivion", "\n");
         }
+
+        if (InnerLoop) {
+            System.out.print(s);
+        }
+        else
         System.out.print(s + " ");
         return true;
     }

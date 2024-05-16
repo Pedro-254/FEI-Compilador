@@ -156,17 +156,37 @@ public class ParserTraducaoC {
     }
 
     //______________ Propositum (FOR) _______________
+    private boolean InnerLoop = false;
+
     public boolean propositum(){
-        if(matchL("propositum","") && matchL("(","") && atribui() && condição() && matchL("?","") && atualiza() && matchL(")","")
-         && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("propositum","for") && startForLoop() && atribui() && condição() && matchL("?",";") && atualiza() && finishForLoop()
+         && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         erro("propositum");
         return false;
     }  
+    
+    public boolean startForLoop(){
+        if(matchL("(", "(")){
+            InnerLoop = true;
+            return true;
+        }
+        erro("startForLoop");
+        return false;   
+    }
+
+    public boolean finishForLoop(){
+        if(matchL(")", ")")){
+            InnerLoop = false;
+            return true;
+        }
+        erro("finishForLoop");
+        return false;   
+    }
 
     public boolean atualiza(){
-        if(matchT("ID","") && matchL("+","") && matchL("+","")){
+        if(matchT("ID",token.getLexema()) && matchL("+","+") && matchL("+","+")){
             return true;
         }
         erro("atualiza");
@@ -425,24 +445,36 @@ public class ParserTraducaoC {
         }
         return false;
     }
-    
-    public boolean traduz(String s){
+
+    public boolean traduz(String s) {
         //__________Pulando Linha_____________
-        if(s.equals(";") || s.equals("}") || s.equals("{")){
-            s += "\n";
+        if (s.equals(";") || s.equals("{")) {
+            if (!InnerLoop) {
+                s += "\n";
+            }
         }
         
-
+        if (s.equals("}")) {
+            s = "\n" + s.trim() + "\n";
+        }
+        
+        
         //__________Tradução Comentario__________
         if(s.contains("|")){
-            //??????????? | modificado para ' pela limitação da linguagem C ????????????????
             s = s.replace("|", "\'");
         }
         if(s.contains("noncommento")){
             s = s.replace("noncommento", "//");
             s = s.replace("oblivion", "\n");
         }
-        System.out.print(s);
+
+        if (InnerLoop) {
+            System.out.print(s);
+        }
+        else
+        System.out.print(s + " ");
+
         return true;
     }
+
 }
