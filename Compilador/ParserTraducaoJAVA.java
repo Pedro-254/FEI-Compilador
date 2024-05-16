@@ -127,6 +127,7 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
+    //&&&&&&&&&&&&&&&&&& Falta poder atribuir tipo boolean &&&&&&&&&&&&&&&&&&&&&&&&&
     public boolean dado(){
         if(matchT("FRASE", token.getLexema()) ||  expre()){
             return true;
@@ -293,18 +294,8 @@ public class ParserTraducaoJAVA {
         return false;
     }
     
-    //!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Exemplo: propositum (i <- 0? i <= y+2? i++){
-    // Condição não aceita expressão como entrada
-    // public boolean condição(){
-    //     if(ID_NUM() && compara() && ID_NUM()){
-    //         // token = getNexToken();
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // Teste correção: Substituindo ID_NUM POR expre
+    //&&&&&&&&&&&&&&&&&& Falta poder condicionar tipo boolean &&&&&&&&&&&&&&&&&&&&&&&&&
+    //______________________Condição________________________ (TRADUZIDO)
     public boolean condição(){
         if(expre() && compara() && expre()){
             // token = getNexToken();
@@ -448,7 +439,7 @@ public class ParserTraducaoJAVA {
             s = s.replace("noncommento", "//");
             s = s.replace("oblivion", "\n");
         }
-        System.out.print(s);
+        System.out.print(s + " ");
         return true;
     }
 }

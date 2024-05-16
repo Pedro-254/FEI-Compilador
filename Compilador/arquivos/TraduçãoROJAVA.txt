@@ -1,5 +1,10 @@
+totum x?
+conditio z?
+y <- |a|?
+z <- 0?
+
 dum(x <=> 3){
-    dicere(x, |2|)?
+    dicere(x,|a|,z)?
 
     noncommento teste de comentario kk oblivion
     dum(y > 1 + x){
