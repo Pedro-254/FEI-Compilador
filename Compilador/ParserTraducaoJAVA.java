@@ -26,8 +26,16 @@ public class ParserTraducaoJAVA {
     public void main(){
         token = getNexToken();
         if(bloco()){
+            //________________Importando Métodos_______________
+            traduz("import java.util.Scanner;");
+
+            //________________Iniciando arquivo_______________
+            traduz("public class LeituraInteiro {\npublic static void main(String[] args) {");
             if(token.getLexema().equals("$")){
                 System.out.println("Sintaticamente correto");
+
+                //________________Fechando arquivo_______________
+                traduz("}}");
             }else{
                 erro("erro sintático");
             }
@@ -96,13 +104,11 @@ public class ParserTraducaoJAVA {
         return true;
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Ao criar o declara, deu problema com o atribui, então para corrigir o erro eu fiz que para declarar tem que colocar o tipo da 
-    //variavel e para atribuir não pode colocar o tipo da variavel
 
-    //____________________Declara_________________________
+
+    //____________________Declara_________________________ (TRADUZIDO)
     public boolean declara(){
-        if(tipo() && matchT("ID","") && matchT("FIM","")){
+        if(tipo() && matchT("ID",token.getLexema()) && matchT("FIM",";")){
             return true;
         }
         erro("declara");
@@ -110,7 +116,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean tipo(){
-        if(matchT("INT","") || matchT("FLOAT","") || matchT("STRING","") || matchT("BOOLEAN","")){
+        if(matchT("INT","int") || matchT("FLOAT","float") || matchT("STRING","String") || matchT("BOOLEAN","boolean")){
             return true;
         }
         // erro("veritipo");
@@ -136,9 +142,9 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //_____________ Reditus (Return) _____________
+    //_____________ Reditus (Return) _____________ (TRADUZIDO)
     public boolean reditus(){
-        if(matchL("reditus","") && var()){
+        if(matchL("reditus","return") && var()){
             return true;
         }
         erro("reditus");
@@ -146,7 +152,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean var(){
-        if((matchT("FRASE","") || matchT("NUM","") || matchL("inanis","") || matchT("ID","")) && matchL("?","")){
+        if((matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema()) || matchL("inanis","null") || matchT("ID",token.getLexema())) && matchL("?",";")){
             return true;
         }
         erro("var");
@@ -312,9 +318,10 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //_______ Input ________
+    //&&&&&&&&&&&&&&&&&&&&& A declaração do Scanner deveria ser no inicio do codigo tbm tem que (import java.util.Scanner;) &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    //_______ Input ________ (TRADUZIDO)
     public boolean Input(){
-        if(matchT("INPUT","") && matchL("(","") && matchT("ID","") && matchL(")","") && matchL("?", "")){
+        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
             return true;
             
         }
@@ -439,7 +446,7 @@ public class ParserTraducaoJAVA {
             s = s.replace("noncommento", "//");
             s = s.replace("oblivion", "\n");
         }
-        System.out.print(s + " ");
+        System.out.print(s);
         return true;
     }
 }

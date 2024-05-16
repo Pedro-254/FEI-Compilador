@@ -96,9 +96,6 @@ public class ParserTraducaoC {
         return true;
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Ao criar o declara, deu problema com o atribui, então para corrigir o erro eu fiz que para declarar tem que colocar o tipo da 
-    //variavel e para atribuir não pode colocar o tipo da variavel
 
     //____________________Declara_________________________ (TRADUZIDO)
     public boolean declara(){
@@ -193,9 +190,8 @@ public class ParserTraducaoC {
     }
 
 
-    //?????????????????????????? Modifiquei a string para printar somento um char pela limitação da Linguagem C ?????????????????????????????
     public boolean IDSTRING(){
-        if(matchT("ID", "\"%d\","+token.getLexema()) || matchT("FRASE", "\"%c\","+token.getLexema())){
+        if(matchT("ID", "\"%d\","+token.getLexema()) || matchT("FRASE",token.getLexema())){
             // token = getNexToken();
             return true;
         }
