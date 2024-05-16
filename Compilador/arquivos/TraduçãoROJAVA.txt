@@ -1,0 +1,9 @@
+dum(x <=> 3){
+    dicere(x, |2|)?
+
+    noncommento teste de comentario kk oblivion
+    dum(y > 1 + x){
+        x <- 2?
+        x <- (3 + 2) / 5?
+    }
+}

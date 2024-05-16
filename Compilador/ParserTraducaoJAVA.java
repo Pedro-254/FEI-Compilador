@@ -37,33 +37,60 @@ public class ParserTraducaoJAVA {
 
     //______________________BLOCO__________________________
     public boolean bloco(){
-        if (token.getTipo().equals("ID") && bloco()) {
-            atribui();
-        }
-        else if (token.getTipo().equals("INT") && bloco()) {
-            declara();
-        }
-        else if (token.getLexema().equals("reditus") && bloco()){
-            reditus();
-        }
-        else if (token.getLexema().equals("propositum") && bloco()) {
-            propositum();
-        }
-        else if (token.getLexema().equals("dicere") && bloco()) {
+        if (token.getTipo().equals("ID")) {
+            if (atribui() && bloco()) {
+                return true;
+            }
             
-        }else if (token.getLexema().equals("dum") && bloco()) {
-            dum();
         }
-        else if(token.getTipo().equals("INPUT") && bloco()){
-            Input();
+        else if ((token.getTipo().equals("INT") || token.getTipo().equals("FLOAT") || token.getTipo().equals("STRING") || token.getTipo().equals("BOOLEAN")  )) {
+            if (declara() && bloco()) {
+                return true;
+            }
         }
-        else if (token.getLexema().equals("nintendum") && bloco()) {
-            nintendum();
+        else if (token.getLexema().equals("reditus")){
+            if (reditus() && bloco()) {
+                return true;
+            }
         }
-        else if (token.getLexema().equals("si") && bloco()) {
-            i_si();
+        else if (token.getLexema().equals("propositum")) {
+            if (propositum() && bloco()) {
+                return true;
+            }
+        }
+        else if (token.getLexema().equals("dicere")) {
+            if (dicere() && bloco()) {
+                return true;
+            }
+            
+        }else if (token.getLexema().equals("dum")) {
+            if (dum() && bloco()) {
+                return true;
+            }
+
+        }
+        else if(token.getTipo().equals("INPUT")){
+            if (Input() && bloco()) {
+                return true;
+            }
+
+        }
+        else if (token.getLexema().equals("nintendum")) {
+            if (nintendum() && bloco()) {
+                return true;
+            }
+
+        }
+        else if (token.getLexema().equals("si")) {
+            if (i_si() && bloco()) {
+                return true;
+            }
+
         }else if (token.getTipo().equals("COMENTARIO")) {
-            matchT("COMENTARIO","");
+            if (noncoment() && bloco()) {
+                return true;
+            }
+            
         }
 
         return true;
@@ -91,9 +118,9 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //____________________Atribui__________________________
+    //____________________Atribui__________________________ (TRADUZIDO)
     public boolean atribui(){
-        if(matchT("ID","") && matchT("ATRIBUICAO","") && dado() && matchT("FIM","")){
+        if(matchT("ID", token.getLexema()) && matchT("ATRIBUICAO", "=") && dado() && matchT("FIM", ";")){
             return true;
         }
         erro("atribui");
@@ -101,7 +128,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean dado(){
-        if(matchT("FRASE","") ||  expre()){
+        if(matchT("FRASE", token.getLexema()) ||  expre()){
             return true;
         }
         erro("result"); 
@@ -143,10 +170,10 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //__________________Dicere_____________________
+    //__________________Dicere_____________________ (TRADUZIDO)
 
     public boolean dicere(){
-        if(matchL("dicere","") && matchL("(","") && printado() && matchL(")","") && matchT("FIM","")){
+        if(matchL("dicere", "System.out.println") && matchL("(","(") && printado() && matchL(")",")") && matchT("FIM", ";")){
             return true;
         }
         erro("dicere");
@@ -164,7 +191,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean IDSTRING(){
-        if(matchT("ID","") || matchT("FRASE","")){
+        if(matchT("ID", token.getLexema()) || matchT("FRASE", token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -174,7 +201,7 @@ public class ParserTraducaoJAVA {
 
     // y de dicere
     public boolean multiprintado(){
-        if((matchT("VIRGULA","") && IDSTRING() && multiprintado())){
+        if((matchT("VIRGULA", "+") && IDSTRING() && multiprintado())){
             // token = getNexToken();
             return true;
         }
@@ -183,17 +210,17 @@ public class ParserTraducaoJAVA {
     }
     
 
-    //_______________Comentario_________________
+    //_______________Comentario_________________ (TRADUZIDO)
     public boolean noncoment(){
-        if (matchT("COMENTARIO","")){
+        if (matchT("COMENTARIO", token.getLexema())){
             return true;
         }
         return false;
     }
     
-    //_________________While_________________
+    //_________________While_________________ (TRADUZIDO)
     public boolean dum(){
-        if (matchL("dum","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","")){
+        if (matchL("dum", "while") && matchL("(","(") && condição() && matchL(")", ")") && matchL("{", "{") && bloco() && matchL("}", "}")){
             return true;
         }
         erro("dum");
@@ -201,7 +228,7 @@ public class ParserTraducaoJAVA {
     }
 
 
-    //__________________Expressao______________________
+    //__________________Expressao______________________ (TRADUZIDO)
     public boolean expre(){
         if (tato() && exp2()){
             return true;
@@ -235,7 +262,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean fator(){
-        if (matchT("ID","") || matchT("NUM","") || matchT("FLUTUANTE","") || matchL("(","") && expre() && matchL(")","")){
+        if (matchT("ID", token.getLexema()) || matchT("NUM", token.getLexema()) || matchT("FLUTUANTE", token.getLexema()) || matchL("(", "(") && expre() && matchL(")", ")")){
             return true;
         }
         erro("fator");
@@ -243,7 +270,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean somamenos(){
-        if (matchL("+","") || matchL("-","")){
+        if (matchL("+", "+") || matchL("-", "-")){
             return true;
         }
         // erro("somamenos");
@@ -251,7 +278,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean multidiv(){
-        if (matchL("*","") || matchL("/","")){
+        if (matchL("*", "*") || matchL("/", "/")){
             return true;
         }
         // erro("multidiv");
@@ -259,7 +286,7 @@ public class ParserTraducaoJAVA {
     }
     
     public boolean compara(){
-        if(matchL("<","") || matchL(">","") || matchL("<=","") || matchL(">=","") || matchL("<>","") || matchL("<=>","")){
+        if(matchL("<", "<") || matchL(">", ">") || matchL("<=","<=") || matchL(">=", ">=") || matchL("<>", "!=") || matchL("<=>", "==")){
             //token = getNexToken();
             return true;
         }
@@ -269,8 +296,17 @@ public class ParserTraducaoJAVA {
     //!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!
     //Exemplo: propositum (i <- 0? i <= y+2? i++){
     // Condição não aceita expressão como entrada
+    // public boolean condição(){
+    //     if(ID_NUM() && compara() && ID_NUM()){
+    //         // token = getNexToken();
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    // Teste correção: Substituindo ID_NUM POR expre
     public boolean condição(){
-        if(ID_NUM() && compara() && ID_NUM()){
+        if(expre() && compara() && expre()){
             // token = getNexToken();
             return true;
         }
@@ -278,7 +314,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean ID_NUM(){
-        if(matchT("ID","") || matchT("NUM","")){
+        if(matchT("ID", token.getLexema()) || matchT("NUM", token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -396,10 +432,23 @@ public class ParserTraducaoJAVA {
     }
     
     public boolean traduz(String s){
-        System.out.print(s);
-        if (s.equals(";")) {
-            System.out.print("\n");
+
+
+        //__________Pulando Linha_____________
+        if(s.equals(";") || s.equals("}") || s.equals("{")){
+            s += "\n";
         }
+        
+
+        //__________Tradução Comentario__________
+        if(s.contains("|")){
+            s = s.replace("|", "\"");
+        }
+        if(s.contains("noncommento")){
+            s = s.replace("noncommento", "//");
+            s = s.replace("oblivion", "\n");
+        }
+        System.out.print(s);
         return true;
     }
 }
