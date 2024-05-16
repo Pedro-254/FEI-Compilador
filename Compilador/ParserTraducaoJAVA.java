@@ -25,14 +25,16 @@ public class ParserTraducaoJAVA {
 
     public void main(){
         token = getNexToken();
-        if(bloco()){
-            //________________Importando Métodos_______________
-            traduz("import java.util.Scanner;");
 
-            //________________Iniciando arquivo_______________
-            traduz("public class LeituraInteiro {\npublic static void main(String[] args) {");
+        //________________Importando Métodos_______________
+        traduz("import java.util.Scanner;");
+
+        //________________Iniciando arquivo_______________
+        traduz("public class LeituraInteiro {\npublic static void main(String[] args) {\n");
+        if(bloco()){
+            
             if(token.getLexema().equals("$")){
-                System.out.println("Sintaticamente correto");
+                //System.out.println("Sintaticamente correto");
 
                 //________________Fechando arquivo_______________
                 traduz("}}");
@@ -116,7 +118,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean tipo(){
-        if(matchT("INT","int") || matchT("FLOAT","float") || matchT("STRING","String") || matchT("BOOLEAN","boolean")){
+        if(matchT("INT","int ") || matchT("FLOAT","float ") || matchT("STRING","String ") || matchT("BOOLEAN","boolean ")){
             return true;
         }
         // erro("veritipo");
