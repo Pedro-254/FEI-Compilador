@@ -27,7 +27,7 @@ public class ParserTraducaoJAVA {
         token = getNexToken();
 
         //________________Importando Métodos_______________
-        traduz("import java.util.Scanner;");
+        traduz("import java.util.Scanner;\n");
 
         //________________Iniciando arquivo_______________
         traduz("public class LeituraInteiro {\npublic static void main(String[] args) {\n");
@@ -435,14 +435,14 @@ public class ParserTraducaoJAVA {
     //_____________if else__________________
 
     public boolean e_oppositum(){
-        if(matchL("oppositum","") && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("oppositum","else") && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","") && addcond()){
+        if(matchL("si","if") && matchL("(","(") && condição() && matchL(")",")") && matchL("{","{") && bloco() && matchL("}","}") && addcond()){
             return true;
         }
         return false;

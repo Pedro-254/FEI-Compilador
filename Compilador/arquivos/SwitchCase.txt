@@ -1,6 +1,8 @@
-totum N?
-auditio(N)?  noncommento Pergunta ao usuário o valor de N oblivion
+filum x?
+auditio(x)?  noncommento Pergunta ao usuário o valor de N oblivion
 
+totum N?
+N <- 3?
 totum i?
 totum somaPares?
 totum somaImpares?
@@ -55,4 +57,3 @@ oppositum{
 }
 
 noncommento Retorna null para finalizar o programa oblivion
-reditus inanis?  

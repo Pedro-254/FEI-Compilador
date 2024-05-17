@@ -25,11 +25,11 @@ public class Main {
     // Parser parser = new Parser(tokens);
     // parser.main();
 
-    ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokens);
-    parserJava.main();
+    // ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokens);
+    // parserJava.main();
     
-    // ParserTraducaoC parserC = new ParserTraducaoC(tokens);
-    // parserC.main();
+    ParserTraducaoC parserC = new ParserTraducaoC(tokens);
+    parserC.main();
 
   }
 }

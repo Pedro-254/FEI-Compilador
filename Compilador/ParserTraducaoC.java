@@ -425,14 +425,14 @@ public class ParserTraducaoC {
     //_____________if else__________________
 
     public boolean e_oppositum(){
-        if(matchL("oppositum","") && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("oppositum","else") && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","") && addcond()){
+        if(matchL("si","if") && matchL("(","(") && condição() && matchL(")",")") && matchL("{","{") && bloco() && matchL("}","}") && addcond()){
             return true;
         }
         return false;
