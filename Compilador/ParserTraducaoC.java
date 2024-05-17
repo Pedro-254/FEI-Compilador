@@ -126,12 +126,18 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //&&&&&&&&&&&&&&&&&& Falta poder atribuir tipo boolean &&&&&&&&&&&&&&&&&&&&&&&&&
     public boolean dado(){
-        if(matchT("FRASE", token.getLexema()) ||  expre()){
+        if(matchT("FRASE", token.getLexema()) || true_false() || expre()){
             return true;
         }
         erro("result"); 
+        return false;
+    }
+
+    public boolean true_false(){
+        if (matchT("TRUE", "1") || matchT("FALSE", "0")) {
+            return true;
+        }
         return false;
     }
 
@@ -152,7 +158,7 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //______________ Propositum (FOR) _______________
+    //______________ Propositum (FOR) _______________ (TRADUZIDO)
     private boolean InnerLoop = false;
 
     public boolean propositum(){
@@ -230,7 +236,7 @@ public class ParserTraducaoC {
     }
     
 
-    //_______________Comentario_________________
+    //_______________Comentario_________________ (TRADUZIDO)
     public boolean noncoment(){
         if (matchT("COMENTARIO", token.getLexema())){
             return true;
@@ -313,10 +319,9 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //&&&&&&&&&&&&&&&&&& Falta poder condicionar tipo boolean &&&&&&&&&&&&&&&&&&&&&&&&&
     //______________________Condição________________________ (TRADUZIDO)
     public boolean condição(){
-        if(expre() && compara() && expre()){
+        if(true_false() || (expre() && compara() && expre())){
             // token = getNexToken();
             return true;
         }
@@ -343,7 +348,7 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //________ Switch Case_______
+    //________ Switch Case_______ (TRADUZIDO)
     public boolean nintendum(){
         if(matchL("nintendum","switch") && matchL("(","(") && ID_FRASE_NUM() && matchL(")",")") && matchL("{","{") && comentario_wii() && wii() && matchL("}","}")){
             return true;
@@ -380,49 +385,9 @@ public class ParserTraducaoC {
         }
         erro("x");
         return false;
-    }
-
-    // public boolean nintendum(){
-    //     if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
-    //         return true;
-    //     } 
-    //     erro("nintendum");
-    //     return false;
-    // }
-
-    // public boolean comentario_wii(){
-    //     if (matchT("COMENTARIO","")) {
-    //         return true;
-    //     }
-    //     return true;
-    // }
-    // public boolean wii(){
-    //     if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
-    //         return true;
-    //     }
-    //     erro("wii");
-    //     return false;
-    // }
-
-    // public boolean continuawii(){
-    //     if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
-    //         return true;
-    //     }
-    //     erro("y");
-    //     return false;
-    // }
-
-    // public boolean ID_FRASE_NUM(){
-    //     if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
-    //         return true;
-    //     }
-    //     erro("x");
-    //     return false;
-    // }
-
-    
+    } 
        
-    //_____________if else__________________
+    //_____________if else__________________ (TRADUZIDO)
 
     public boolean e_oppositum(){
         if(matchL("oppositum","else") && matchL("{","{") && bloco() && matchL("}","}")){
