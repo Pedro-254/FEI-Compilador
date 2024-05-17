@@ -10,7 +10,7 @@ public class Main {
     List<Token> tokens = null;
 
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/TesteGeral.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/SwitchCase.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexer = new Lexer(data);
@@ -28,8 +28,8 @@ public class Main {
     ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokens);
     parserJava.main();
     
-    //ParserTraducaoC parserC = new ParserTraducaoC(tokens);
-    //parserC.main();
+    // ParserTraducaoC parserC = new ParserTraducaoC(tokens);
+    // parserC.main();
 
   }
 }
