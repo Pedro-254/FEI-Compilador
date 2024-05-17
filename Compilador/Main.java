@@ -7,28 +7,30 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    List<Token> tokens = null;
-
+    List<Token> tokensJava = null;
+    List<Token> tokensC = null;
     //_______ Leitura de arquivo_______
     String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/SwitchCase.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
-    Lexer lexer = new Lexer(data);
-    tokens = lexer.getTokens();
-    for (Token token : tokens) {
+    Lexer lexerJava = new Lexer(data);
+    tokensJava = lexerJava.getTokens();
+
+    Lexer lexerC = new Lexer(data);
+    tokensC = lexerC.getTokens();
+
+    for (Token token : tokensJava) {
       System.out.println(token);
     }
 
     System.out.println("_______Inicio Sintático________");
 
     //_______ Análise de Sintática (Lexico)_______
-    // Parser parser = new Parser(tokens);
-    // parser.main();
 
-    // ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokens);
-    // parserJava.main();
+    ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokensJava);
+    parserJava.main();
     
-    ParserTraducaoC parserC = new ParserTraducaoC(tokens);
+    ParserTraducaoC parserC = new ParserTraducaoC(tokensC);
     parserC.main();
 
   }
