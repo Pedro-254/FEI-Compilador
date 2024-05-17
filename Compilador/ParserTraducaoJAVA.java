@@ -1,9 +1,12 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class ParserTraducaoJAVA {
     List<Token> tokens;
     Token token;
-
+    String conteudo = "";
     public ParserTraducaoJAVA(List<Token> tokens) {
         this.tokens = tokens;
     }
@@ -30,14 +33,16 @@ public class ParserTraducaoJAVA {
         traduz("import java.util.Scanner;\n");
 
         //________________Iniciando arquivo_______________
-        traduz("public class LeituraInteiro {\npublic static void main(String[] args) {\n");
+        traduz("public class TraducaoJava {\npublic static void main(String[] args) {\n");
         if(bloco()){
             
             if(token.getLexema().equals("$")){
-                //System.out.println("Sintaticamente correto");
-
+                System.out.println("Sintaticamente correto");
                 //________________Fechando arquivo_______________
                 traduz("}\n}");
+
+                //________________Criando arquivo_______________
+                criarArquivo("TraducaoJava.java", conteudo);
             }else{
                 erro("erro sintático");
             }
@@ -482,11 +487,22 @@ public class ParserTraducaoJAVA {
 
         
         if (InnerLoop) {
-            System.out.print(s);
+            conteudo += s;
         }
         else
-        System.out.print(s);
+        conteudo += s;
         return true;
     
+    }
+
+    // Método para criar e escrever no arquivo
+    public static void criarArquivo(String nomeArquivo, String conteudo) {
+        // Usando BufferedWriter para escrever no arquivo
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nomeArquivo))) {
+            escritor.write(conteudo);
+            System.out.println("Arquivo criado e conteúdo escrito com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
     }
 }
