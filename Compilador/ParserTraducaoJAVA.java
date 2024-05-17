@@ -25,9 +25,19 @@ public class ParserTraducaoJAVA {
 
     public void main(){
         token = getNexToken();
+
+        //________________Importando Métodos_______________
+        traduz("import java.util.Scanner;\n");
+
+        //________________Iniciando arquivo_______________
+        traduz("public class LeituraInteiro {\npublic static void main(String[] args) {\n");
         if(bloco()){
+            
             if(token.getLexema().equals("$")){
-                System.out.println("Sintaticamente correto");
+                //System.out.println("Sintaticamente correto");
+
+                //________________Fechando arquivo_______________
+                traduz("}\n}");
             }else{
                 erro("erro sintático");
             }
@@ -96,13 +106,11 @@ public class ParserTraducaoJAVA {
         return true;
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Ao criar o declara, deu problema com o atribui, então para corrigir o erro eu fiz que para declarar tem que colocar o tipo da 
-    //variavel e para atribuir não pode colocar o tipo da variavel
 
-    //____________________Declara_________________________
+
+    //____________________Declara_________________________ (TRADUZIDO)
     public boolean declara(){
-        if(tipo() && matchT("ID","") && matchT("FIM","")){
+        if(tipo() && matchT("ID",token.getLexema()) && matchT("FIM",";")){
             return true;
         }
         erro("declara");
@@ -110,7 +118,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean tipo(){
-        if(matchT("INT","") || matchT("FLOAT","") || matchT("STRING","") || matchT("BOOLEAN","")){
+        if(matchT("INT","int ") || matchT("FLOAT","float ") || matchT("STRING","String ") || matchT("BOOLEAN","boolean ")){
             return true;
         }
         // erro("veritipo");
@@ -136,9 +144,9 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //_____________ Reditus (Return) _____________
+    //_____________ Reditus (Return) _____________ (TRADUZIDO)
     public boolean reditus(){
-        if(matchL("reditus","") && var()){
+        if(matchL("reditus","return ") && var()){
             return true;
         }
         erro("reditus");
@@ -146,25 +154,46 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean var(){
-        if((matchT("FRASE","") || matchT("NUM","") || matchL("inanis","") || matchT("ID","")) && matchL("?","")){
+        if((matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema()) || matchL("inanis","null") || matchT("ID",token.getLexema())) && matchL("?",";")){
             return true;
         }
         erro("var");
         return false;
     }
 
-    //______________ Propositum (FOR) _______________
+    //______________ Propositum (FOR) _______________ (TRADUZIDO)
+    private boolean InnerLoop = false;
+    private boolean moremore = false;
+
     public boolean propositum(){
-        if(matchL("propositum","") && matchL("(","") && atribui() && condição() && matchL("?","") && atualiza() && matchL(")","")
-         && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("propositum","for") && startForLoop() && atribui() && condição() && matchL("?",";") && atualiza() && finishForLoop()
+         && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         erro("propositum");
         return false;
-    }  
+    } 
+
+    public boolean startForLoop(){
+        if(matchL("(", "(")){
+            InnerLoop = true;
+            return true;
+        }
+        erro("startForLoop");
+        return false;   
+    }
+
+    public boolean finishForLoop(){
+        if(matchL(")", ")")){
+            InnerLoop = false;
+            return true;
+        }
+        erro("finishForLoop");
+        return false;   
+    }
 
     public boolean atualiza(){
-        if(matchT("ID","") && matchL("+","") && matchL("+","")){
+        if(matchT("ID",token.getLexema()) && matchL("+","+") && matchL("+","+")){
             return true;
         }
         erro("atualiza");
@@ -312,9 +341,10 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //_______ Input ________
+    //&&&&&&&&&&&&&&&&&&&&& A declaração do Scanner deveria ser no inicio do codigo tbm tem que (import java.util.Scanner;) &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    //_______ Input ________ (TRADUZIDO)
     public boolean Input(){
-        if(matchT("INPUT","") && matchL("(","") && matchT("ID","") && matchL(")","") && matchL("?", "")){
+        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
             return true;
             
         }
@@ -325,7 +355,7 @@ public class ParserTraducaoJAVA {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
+        if(matchL("nintendum","switch") && matchL("(","(") && ID_FRASE_NUM() && matchL(")",")") && matchL("{","{") && comentario_wii() && wii() && matchL("}","}")){
             return true;
         } 
         erro("nintendum");
@@ -333,13 +363,13 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean comentario_wii(){
-        if (matchT("COMENTARIO","")) {
+        if (matchT("COMENTARIO",token.getLexema())) {
             return true;
         }
         return true;
     }
     public boolean wii(){
-        if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
+        if(matchL("wii","case ") && ID_FRASE_NUM() && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";") && continuawii()){
             return true;
         }
         erro("wii");
@@ -347,7 +377,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean continuawii(){
-        if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
+        if( comentario_wii() && (matchL("vexillum","default") && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";")) || wii()){
             return true;
         }
         erro("y");
@@ -355,26 +385,64 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean ID_FRASE_NUM(){
-        if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
+        if(matchT("ID",token.getLexema()) || matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema())){
             return true;
         }
         erro("x");
         return false;
     }
 
+    // public boolean nintendum(){
+    //     if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
+    //         return true;
+    //     } 
+    //     erro("nintendum");
+    //     return false;
+    // }
+
+    // public boolean comentario_wii(){
+    //     if (matchT("COMENTARIO","")) {
+    //         return true;
+    //     }
+    //     return true;
+    // }
+    // public boolean wii(){
+    //     if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
+    //         return true;
+    //     }
+    //     erro("wii");
+    //     return false;
+    // }
+
+    // public boolean continuawii(){
+    //     if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
+    //         return true;
+    //     }
+    //     erro("y");
+    //     return false;
+    // }
+
+    // public boolean ID_FRASE_NUM(){
+    //     if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
+    //         return true;
+    //     }
+    //     erro("x");
+    //     return false;
+    // }
+
     
        
     //_____________if else__________________
 
     public boolean e_oppositum(){
-        if(matchL("oppositum","") && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("oppositum","else") && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","") && addcond()){
+        if(matchL("si","if") && matchL("(","(") && condição() && matchL(")",")") && matchL("{","{") && bloco() && matchL("}","}") && addcond()){
             return true;
         }
         return false;
@@ -426,20 +494,33 @@ public class ParserTraducaoJAVA {
 
 
         //__________Pulando Linha_____________
-        if(s.equals(";") || s.equals("}") || s.equals("{")){
-            s += "\n";
+        if (s.equals(";") || s.equals("{")) {
+            if (!InnerLoop) {
+                s += "\n";
+            }
         }
         
-
+        if (s.equals("}")) {
+            s = "\n" + s.trim() + "\n";
+        }
+        
+        
         //__________Tradução Comentario__________
         if(s.contains("|")){
             s = s.replace("|", "\"");
         }
         if(s.contains("noncommento")){
-            s = s.replace("noncommento", "//");
-            s = s.replace("oblivion", "\n");
+            s = s.replace("noncommento", "/*");
+            s = s.replace("oblivion", "*/\n");
         }
-        System.out.print(s + " ");
+
+        
+        if (InnerLoop) {
+            System.out.print(s);
+        }
+        else
+        System.out.print(s);
         return true;
+    
     }
 }

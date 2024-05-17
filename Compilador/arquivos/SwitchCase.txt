@@ -1,4 +1,11 @@
-auditio(N)?  noncommento Pergunta ao usuário o valor de N oblivion
+filum x?
+auditio(x)?  noncommento Pergunta ao usuário o valor de N oblivion
+
+totum N?
+N <- 3?
+totum i?
+totum somaPares?
+totum somaImpares?
 
 somaPares <- 0 ?  noncommento Inicializa a soma dos pares como 0 oblivion
 somaImpares <- 0 ?  noncommento Inicializa a soma dos ímpares como 0 oblivion
@@ -34,22 +41,19 @@ propositum (i <- 1? i <= N? i++){
         vexillum:  
 
             noncommento Não faz nada, apenas continua o loop oblivion
-            reditus inanis?
+            confractus?
             
     }
 }
 noncommento Verifica se a soma dos pares é maior que a soma dos ímpares oblivion
 si(somaPares > somaImpares){  
     noncommento Se sim, imprime que a soma dos pares é maior oblivion
-    dicere(|"A soma dos números pares é maior"|)?  
+    dicere(|A soma dos números pares é maior|)?  
 }
-
-noncommento Senão oblivion
 oppositum{  
 
     noncommento Imprime que a soma dos ímpares é maior ou igual oblivion
-    dicere(|"A soma dos números ímpares é maior ou igual"|)?  
+    dicere(|A soma dos números ímpares é maior ou igual|)?  
 }
 
 noncommento Retorna null para finalizar o programa oblivion
-reditus inanis?  

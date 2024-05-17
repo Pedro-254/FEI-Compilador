@@ -96,9 +96,6 @@ public class ParserTraducaoC {
         return true;
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ERRO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Ao criar o declara, deu problema com o atribui, então para corrigir o erro eu fiz que para declarar tem que colocar o tipo da 
-    //variavel e para atribuir não pode colocar o tipo da variavel
 
     //____________________Declara_________________________ (TRADUZIDO)
     public boolean declara(){
@@ -140,7 +137,7 @@ public class ParserTraducaoC {
 
     //_____________ Reditus (Return) _____________ (TRADUZIDO)
     public boolean reditus(){
-        if(matchL("reditus","return") && var()){
+        if(matchL("reditus","return ") && var()){
             return true;
         }
         erro("reditus");
@@ -156,17 +153,37 @@ public class ParserTraducaoC {
     }
 
     //______________ Propositum (FOR) _______________
+    private boolean InnerLoop = false;
+
     public boolean propositum(){
-        if(matchL("propositum","") && matchL("(","") && atribui() && condição() && matchL("?","") && atualiza() && matchL(")","")
-         && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("propositum","for") && startForLoop() && atribui() && condição() && matchL("?",";") && atualiza() && finishForLoop()
+         && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         erro("propositum");
         return false;
-    }  
+    }   
+
+    public boolean startForLoop(){
+        if(matchL("(", "(")){
+            InnerLoop = true;
+            return true;
+        }
+        erro("startForLoop");
+        return false;   
+    }
+
+    public boolean finishForLoop(){
+        if(matchL(")", ")")){
+            InnerLoop = false;
+            return true;
+        }
+        erro("finishForLoop");
+        return false;   
+    }
 
     public boolean atualiza(){
-        if(matchT("ID","") && matchL("+","") && matchL("+","")){
+        if(matchT("ID",token.getLexema()) && matchL("+","+") && matchL("+","+")){
             return true;
         }
         erro("atualiza");
@@ -193,9 +210,8 @@ public class ParserTraducaoC {
     }
 
 
-    //?????????????????????????? Modifiquei a string para printar somento um char pela limitação da Linguagem C ?????????????????????????????
     public boolean IDSTRING(){
-        if(matchT("ID", "\"%d\","+token.getLexema()) || matchT("FRASE", "\"%c\","+token.getLexema())){
+        if(matchT("ID", "\"%d\","+token.getLexema()) || matchT("FRASE",token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -329,7 +345,7 @@ public class ParserTraducaoC {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
+        if(matchL("nintendum","switch") && matchL("(","(") && ID_FRASE_NUM() && matchL(")",")") && matchL("{","{") && comentario_wii() && wii() && matchL("}","}")){
             return true;
         } 
         erro("nintendum");
@@ -337,13 +353,13 @@ public class ParserTraducaoC {
     }
 
     public boolean comentario_wii(){
-        if (matchT("COMENTARIO","")) {
+        if (matchT("COMENTARIO",token.getLexema())) {
             return true;
         }
         return true;
     }
     public boolean wii(){
-        if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
+        if(matchL("wii","case ") && ID_FRASE_NUM() && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";") && continuawii()){
             return true;
         }
         erro("wii");
@@ -351,7 +367,7 @@ public class ParserTraducaoC {
     }
 
     public boolean continuawii(){
-        if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
+        if( comentario_wii() && (matchL("vexillum","default") && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";")) || wii()){
             return true;
         }
         erro("y");
@@ -359,26 +375,64 @@ public class ParserTraducaoC {
     }
 
     public boolean ID_FRASE_NUM(){
-        if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
+        if(matchT("ID",token.getLexema()) || matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema())){
             return true;
         }
         erro("x");
         return false;
     }
 
+    // public boolean nintendum(){
+    //     if(matchL("nintendum","") && matchL("(","") && ID_FRASE_NUM() && matchL(")","") && matchL("{","") && comentario_wii() && wii() && matchL("}","")){
+    //         return true;
+    //     } 
+    //     erro("nintendum");
+    //     return false;
+    // }
+
+    // public boolean comentario_wii(){
+    //     if (matchT("COMENTARIO","")) {
+    //         return true;
+    //     }
+    //     return true;
+    // }
+    // public boolean wii(){
+    //     if(matchL("wii","") && ID_FRASE_NUM() && matchL(":","") && bloco() && matchL("confractus","") && matchL("?","") && continuawii()){
+    //         return true;
+    //     }
+    //     erro("wii");
+    //     return false;
+    // }
+
+    // public boolean continuawii(){
+    //     if( comentario_wii() && (matchL("vexillum","") && matchL(":","") && bloco()) || wii()){
+    //         return true;
+    //     }
+    //     erro("y");
+    //     return false;
+    // }
+
+    // public boolean ID_FRASE_NUM(){
+    //     if(matchT("ID","") || matchT("FRASE","") || matchT("NUM","")){
+    //         return true;
+    //     }
+    //     erro("x");
+    //     return false;
+    // }
+
     
        
     //_____________if else__________________
 
     public boolean e_oppositum(){
-        if(matchL("oppositum","") && matchL("{","") && bloco() && matchL("}","")){
+        if(matchL("oppositum","else") && matchL("{","{") && bloco() && matchL("}","}")){
             return true;
         }
         return false;
     }
 
     public boolean i_si(){
-        if(matchL("si","") && matchL("(","") && condição() && matchL(")","") && matchL("{","") && bloco() && matchL("}","") && addcond()){
+        if(matchL("si","if") && matchL("(","(") && condição() && matchL(")",")") && matchL("{","{") && bloco() && matchL("}","}") && addcond()){
             return true;
         }
         return false;
@@ -428,21 +482,32 @@ public class ParserTraducaoC {
     
     public boolean traduz(String s){
         //__________Pulando Linha_____________
-        if(s.equals(";") || s.equals("}") || s.equals("{")){
-            s += "\n";
+        if (s.equals(";") || s.equals("{")) {
+            if (!InnerLoop) {
+                s += "\n";
+            }
         }
         
-
+        if (s.equals("}")) {
+            s = "\n" + s.trim() + "\n";
+        }
+        
+        
         //__________Tradução Comentario__________
         if(s.contains("|")){
-            //??????????? | modificado para ' pela limitação da linguagem C ????????????????
             s = s.replace("|", "\'");
         }
         if(s.contains("noncommento")){
-            s = s.replace("noncommento", "//");
-            s = s.replace("oblivion", "\n");
+            s = s.replace("noncommento", "/*");
+            s = s.replace("oblivion", "*/\n");
         }
+
+        if (InnerLoop) {
+            System.out.print(s);
+        }
+        else
         System.out.print(s);
+
         return true;
     }
 }
