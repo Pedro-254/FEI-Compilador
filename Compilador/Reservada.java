@@ -47,6 +47,10 @@ public class Reservada extends AFD{
                         return new Token("CASE",plv);
                     case"vexillum":
                         return new Token("DEFAULT",plv);
+                    case"verum":
+                        return new Token("TRUE",plv);
+                    case"falsum":
+                        return new Token("FALSE",plv);
                     default:
                         return null;
                 }
