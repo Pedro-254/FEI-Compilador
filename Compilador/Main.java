@@ -10,7 +10,7 @@ public class Main {
     List<Token> tokensJava = null;
     List<Token> tokensC = null;
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/SwitchCase.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/TesteGeral.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexerJava = new Lexer(data);

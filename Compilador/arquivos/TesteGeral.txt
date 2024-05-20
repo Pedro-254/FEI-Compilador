@@ -1,25 +1,16 @@
-totum i?
-miseratio f?
-filum s?
-conditio b?
+totum x1?
+miseratio fer2 ?
 
-filum x?
-x <- |palavra|?
+x1 <- 2?
+fer2 <- 16.376?
 
-totum y?
-y <- 2?
+noncommento vamo ve se roda charlão oblivion
 
-totum z?
-z <- 2?
-
-noncommento teste de comentario oblivion
-
-dicere(x)?
-
-auditio(x)?
-
-
-dum(z <=> y){
-    z <- 3?
+dum (x1 < fer2){
+    dicere(| o numero digitado não chegou perto do numero secreto |, x1 , |\n|)?
+    x1 <- x1 + (4/2-1 * (2-1)) ?
+    si( x1 > fer2){
+        dicere(| Parabens chegou no valor secreto|, |\n|)?
+    }
 }
 

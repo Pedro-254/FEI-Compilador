@@ -475,7 +475,7 @@ public class ParserTraducaoC {
         
         //__________Tradução Comentario__________
         if(s.contains("|")){
-            s = s.replace("|", "\'");
+            s = s.replace("|", "\"");
         }
         if(s.contains("noncommento")){
             s = s.replace("noncommento", "/*");
