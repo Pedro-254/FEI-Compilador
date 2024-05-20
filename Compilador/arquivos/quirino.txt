@@ -1,0 +1,42 @@
+noncommento declaracao de variáveis oblivion
+totum x?
+totum y?
+totum i?
+
+noncommento atribuicao de valores oblivion
+x <- 10?
+y <- 20?
+
+noncommento Condicional oblivion
+si (x < y) {
+    dicere(| x é menor que y |)?
+} oppositum {
+    dicere(| x não é menor que y |)?
+}
+
+noncommento Loop for oblivion
+propositum (i <- 0? i < 10? i++) {
+    dicere(| i é: |, i)?
+}
+
+noncommento Loop while oblivion
+dum (x < y) {
+    dicere(| x ainda é menor que y |)?
+    x <- x + 1?
+}
+
+noncommento Switch case oblivion
+nintendum (x) {
+    wii 1:
+        dicere(| x é 1 |)?
+        confractus?
+    wii 2:
+        dicere(| x é 2 |)?
+        confractus?
+    vexillum:
+        dicere(| x é outro valor |)?
+        confractus?
+}
+
+noncommento Retorno de funcao oblivion
+reditus x?
