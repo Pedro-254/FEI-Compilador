@@ -175,7 +175,6 @@ public class ParserTraducaoJAVA {
 
     //______________ Propositum (FOR) _______________ (TRADUZIDO)
     private boolean InnerLoop = false;
-    private boolean moremore = false;
 
     public boolean propositum(){
         if(matchL("propositum","for") && startForLoop() && atribui() && condição() && matchL("?",";") && atualiza() && finishForLoop()
@@ -304,7 +303,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean fator(){
-        if (matchT("ID", token.getLexema()) || matchT("NUM", token.getLexema()) || matchT("FLUTUANTE", token.getLexema()) || matchL("(", "(") && expre() && matchL(")", ")")){
+        if (matchT("ID", token.getLexema()) || matchT("NUM", token.getLexema()) || matchT("FLUTUANTE", token.getLexema() + "f") || matchL("(", "(") && expre() && matchL(")", ")")){
             return true;
         }
         erro("fator");
