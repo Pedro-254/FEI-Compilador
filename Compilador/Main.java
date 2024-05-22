@@ -4,13 +4,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import Lexico.Lexer;
+import Lexico.Token;
+import Sintatico.ParserTraducaoC;
+import Sintatico.ParserTraducaoJAVA;
+
 public class Main {
 
   public static void main(String[] args) throws IOException {
     List<Token> tokensJava = null;
     List<Token> tokensC = null;
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/teste.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/Calculadora.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexerJava = new Lexer(data);

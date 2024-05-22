@@ -1,3 +1,4 @@
+package Lexico;
 public class Token {
  private String lexema;
  private String tipo;

@@ -1,7 +1,10 @@
+package Sintatico;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
+import Lexico.Token;
 
 public class ParserTraducaoJAVA {
     List<Token> tokens;
@@ -33,7 +36,7 @@ public class ParserTraducaoJAVA {
         traduz("import java.util.Scanner;\n");
 
         //________________Iniciando arquivo_______________
-        traduz("public class TraducaoJava {\npublic static void main(String[] args) {\n");
+        traduz("public class TraducaoJava {\npublic static void main(String[] args) {\n Scanner scanner = new Scanner(System.in);\n");
         if(bloco()){
             
             if(token.getLexema().equals("$")){
@@ -122,7 +125,6 @@ public class ParserTraducaoJAVA {
             if (noncoment() && bloco()) {
                 return true;
             }
-        //===========================================================================================================================
         }else if (token.getTipo().equals("STRINGINPUT")) {
 
             if (StringInput() && bloco()) {
@@ -154,7 +156,6 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //===========================================================================================================================
     //____________________Declara String_________________________ (TRADUZIDO)
     public boolean declarastring(){
         if(matchT("STRING","String") && traduz(" ") && matchT("ID",token.getLexema()) && matchT("FIM",";")){
@@ -172,8 +173,6 @@ public class ParserTraducaoJAVA {
         erro("Atribui String");
         return false;
     }
-
-    //===========================================================================================================================
 
     //____________________Atribui__________________________ (TRADUZIDO)
     public boolean atribui(){
@@ -194,7 +193,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean true_false(){
-        if (matchT("TRUE", token.getLexema()) || matchT("FALSE", token.getLexema())) {
+        if (matchT("TRUE", "true") || matchT("FALSE", "false")) {
             return true;
         }
         return false;
@@ -258,7 +257,7 @@ public class ParserTraducaoJAVA {
     //__________________Dicere_____________________ (TRADUZIDO)
 
     public boolean dicere(){
-        if(matchL("dicere", "System.out.println") && matchL("(","(") && printado() && matchL(")",")") && matchT("FIM", ";")){
+        if(matchL("dicere", "System.out.print") && matchL("(","(") && printado() && matchL(")",")") && matchT("FIM", ";")){
             return true;
         }
         erro("dicere");
@@ -294,10 +293,9 @@ public class ParserTraducaoJAVA {
         return true;
     }
 
-    //===========================================================================================================================
     //__________________String Dicere_____________________ (TRADUZIDO)
     public boolean fdicere(){
-        if(matchL("fdicere", "System.out.println") && matchL("(","(") && fprintado() && matchL(")",")") && matchT("FIM", ";")){
+        if(matchL("fdicere", "System.out.print") && matchL("(","(") && fprintado() && matchL(")",")") && matchT("FIM", ";")){
             return true;
         }
         erro("dicere");
@@ -332,7 +330,6 @@ public class ParserTraducaoJAVA {
         // vazio
         return true;
     }
-    //===========================================================================================================================
     
 
     //_______________Comentario_________________ (TRADUZIDO)
@@ -420,7 +417,15 @@ public class ParserTraducaoJAVA {
 
     //______________________Condição________________________ (TRADUZIDO)
     public boolean condição(){
-        if(true_false() || (expre() && compara() && expre())){
+        if( variavelconditio() || true_false() || (expre() && compara() && expre())){
+            // token = getNexToken();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean variavelconditio(){
+        if( matchT("BOOLEAN", "")  && matchT("ID", token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -429,7 +434,7 @@ public class ParserTraducaoJAVA {
 
     //_______ Input ________ (TRADUZIDO)
     public boolean Input(){
-        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= Integer.parseInt(scanner.nextLine());") && matchL(")","") && matchL("?", ";")){
+        if( matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= Integer.parseInt(scanner.nextLine());") && matchL(")","") && matchL("?", ";")){
             return true;
             
         }
@@ -438,10 +443,9 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    //===========================================================================================================================
     //_______ String Input ________ (TRADUZIDO)
     public boolean StringInput(){
-        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("STRINGINPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
+        if(matchT("STRINGINPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
             return true;
             
         }
@@ -449,7 +453,6 @@ public class ParserTraducaoJAVA {
         erro("Erro string input");
         return false;
     }
-    //===========================================================================================================================
 
     //________ Switch Case_______
     public boolean nintendum(){
@@ -467,7 +470,7 @@ public class ParserTraducaoJAVA {
         return true;
     }
     public boolean wii(){
-        if(matchL("wii","case ") && ID_FRASE_NUM() && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";") && continuawii()){
+        if(matchL("wii","case ") && ID_NUM() && matchL(":",":\n") && bloco() && matchL("confractus","break") && matchL("?",";") && continuawii()){
             return true;
         }
         erro("wii");
@@ -482,8 +485,8 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    public boolean ID_FRASE_NUM(){
-        if(matchT("ID",token.getLexema()) || matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema())){
+    public boolean ID_NUM(){
+        if(matchT("ID",token.getLexema()) || matchT("NUM",token.getLexema())){
             return true;
         }
         erro("x");
