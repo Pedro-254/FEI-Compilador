@@ -1,0 +1,30 @@
+fdicere(|__Bem Vindo a Fatorial_\n|)?
+
+conditio rodando?
+rodando <- verum?
+
+
+dum(conditio rodando){
+
+    totum start?
+    totum fat?
+    fat <- 1?
+
+    fdicere(|\nEscolha um numero: |)?
+    totum n?
+    auditio(n)?
+
+    propositum( start <- 1 ? start <= n ? start++){
+        fat <- fat * start?
+    }
+
+    fdicere(|o resultado do Fatorial e: |)?
+    dicere(fat)?
+    fdicere(|\nDeseja parar? Digite 0 para sair e 1 para continuar|)?
+    totum dec?
+    auditio(dec)?
+    si (dec <=> 0){
+        rodando <- falsum?
+    }
+
+}
