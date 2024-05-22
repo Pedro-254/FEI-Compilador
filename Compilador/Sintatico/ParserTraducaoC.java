@@ -359,11 +359,11 @@ public class ParserTraducaoC {
 
 
     public boolean mIDSTRING(){
-        if(matchT("ID", "\"%f\","+token.getLexema())){
+        if(matchT("ID", "\"%f\","+token.getLexema()) || matchT("FLUTUANTE","float")){
             // token = getNexToken();
             return true;
         }
-        erro("IDSTRING");
+        erro("mIDSTRING");
         return false;
     }
 

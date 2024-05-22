@@ -319,11 +319,11 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean mIDSTRING(){
-        if(matchT("ID", token.getLexema())){
+        if(matchT("ID", token.getLexema()) || matchT("FLUTUANTE", token.getLexema())){
             // token = getNexToken();
             return true;
         }
-        erro("IDSTRING");
+        erro("mIDSTRING");
         return false;
     }
 
