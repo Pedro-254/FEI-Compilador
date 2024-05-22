@@ -1,5 +1,13 @@
+totum x?
 miseratio y?
+y <- 0?
 
 propositum (x <- 0? x < 10? x++){
-   y <- 3.4?         
+   y <- y + 1?
+   dicere(y)?    
+}
+
+propositum (x <- 10? x > 0? x--){
+   y <- y - 1?
+   dicere(y)?
 }

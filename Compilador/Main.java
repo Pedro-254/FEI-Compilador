@@ -10,7 +10,7 @@ public class Main {
     List<Token> tokensJava = null;
     List<Token> tokensC = null;
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/CodigoString.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/teste.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexerJava = new Lexer(data);
@@ -26,12 +26,13 @@ public class Main {
     System.out.println("_______Inicio Sintático________");
 
     //_______ Análise de Sintática (Lexico)_______
-
+    ParserTraducaoC parserC = new ParserTraducaoC(tokensC);
+    parserC.main();
+    
     ParserTraducaoJAVA parserJava = new ParserTraducaoJAVA(tokensJava);
     parserJava.main();
     
-    // ParserTraducaoC parserC = new ParserTraducaoC(tokensC);
-    // parserC.main();
+    
 
   }
 }

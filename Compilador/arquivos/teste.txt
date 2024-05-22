@@ -1,0 +1,42 @@
+totum x?
+
+fdicere(|Escolha uma Opção|)?
+auditio(x)?
+
+nintendum(x){
+    wii 1:
+        fdicere(|Opção 1\n|)?
+        confractus?
+    wii 2:
+        fdicere(|Opção 2\n|)?
+        confractus?
+    wii 3:
+        fdicere(|Opção 3\n|)?
+        confractus?
+    wii 4:
+        fdicere(|Opção 4\n|)?
+        confractus?
+    vexillum:
+        fdicere(|Opção 0\n|)?
+        x <- 0?
+        confractus?
+}
+
+totum i?
+propositum (i <- 0? i < x? i++){
+    fdicere(|Valor de i: |)?
+    dicere(i)?
+    fdicere(|\n|)? 
+    si(i <=> 2){
+        dicere(2)?  
+        fdicere(|\n|)? 
+    }
+    si(i > 2){
+        fdicere(|maior que 2\n|)?  
+    }
+    si(i < 2){
+        fdicere(|menor que 2\n|)?  
+    }
+      
+}
+

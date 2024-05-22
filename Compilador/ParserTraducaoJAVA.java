@@ -186,7 +186,7 @@ public class ParserTraducaoJAVA {
 
 
     public boolean dado(){
-        if(matchT("FRASE", token.getLexema()) || true_false() || expre()){
+        if( true_false() || expre()){
             return true;
         }
         erro("result"); 
@@ -202,7 +202,7 @@ public class ParserTraducaoJAVA {
 
     //_____________ Reditus (Return) _____________ (TRADUZIDO)
     public boolean reditus(){
-        if(matchL("reditus","return ") && var()){
+        if(matchL("reditus","return ") && var() && matchL("?",";")){
             return true;
         }
         erro("reditus");
@@ -210,10 +210,10 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean var(){
-        if((matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema()) || matchL("inanis","null") || matchT("ID",token.getLexema())) && matchL("?",";")){
+        if(matchT("FRASE",token.getLexema()) || matchT("NUM",token.getLexema()) || matchL("inanis","null") || matchT("ID",token.getLexema())){
             return true;
         }
-        erro("var");
+        erro("reditus var");
         return false;
     }
 
@@ -248,7 +248,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean atualiza(){
-        if(matchT("ID",token.getLexema()) && matchL("+","+") && matchL("+","+")){
+        if(matchT("ID",token.getLexema()) &&  (matchL("+","+") && matchL("+","+") || matchL("-","-") && matchL("-","-"))){
             return true;
         }
         erro("atualiza");
@@ -267,7 +267,7 @@ public class ParserTraducaoJAVA {
     
     // x de dicere
     public boolean printado(){
-        if( IDSTRING() && multiprintado()){
+        if( IDNUM() && multiprintado()){
             // token = getNexToken();
             return true;
         }
@@ -275,8 +275,8 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    public boolean IDSTRING(){
-        if(matchT("ID", token.getLexema())){
+    public boolean IDNUM(){
+        if(matchT("ID", token.getLexema()) || matchT("NUM", "\"" + token.getLexema() + "\"")){
             // token = getNexToken();
             return true;
         }
@@ -286,7 +286,7 @@ public class ParserTraducaoJAVA {
 
     // y de dicere
     public boolean multiprintado(){
-        if((matchT("VIRGULA", "+") && IDSTRING() && multiprintado())){
+        if((matchT("VIRGULA", "+") && IDNUM() && multiprintado())){
             // token = getNexToken();
             return true;
         }
@@ -294,7 +294,7 @@ public class ParserTraducaoJAVA {
         return true;
     }
 
-        //===========================================================================================================================
+    //===========================================================================================================================
     //__________________String Dicere_____________________ (TRADUZIDO)
     public boolean fdicere(){
         if(matchL("fdicere", "System.out.println") && matchL("(","(") && fprintado() && matchL(")",")") && matchT("FIM", ";")){
@@ -427,17 +427,9 @@ public class ParserTraducaoJAVA {
         return false;
     }
 
-    public boolean ID_NUM(){
-        if(matchT("ID", token.getLexema()) || matchT("NUM", token.getLexema())){
-            // token = getNexToken();
-            return true;
-        }
-        return false;
-    }
-
     //_______ Input ________ (TRADUZIDO)
     public boolean Input(){
-        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
+        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("INPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= Integer.parseInt(scanner.nextLine());") && matchL(")","") && matchL("?", ";")){
             return true;
             
         }
@@ -461,7 +453,7 @@ public class ParserTraducaoJAVA {
 
     //________ Switch Case_______
     public boolean nintendum(){
-        if(matchL("nintendum","switch") && matchL("(","(") && ID_FRASE_NUM() && matchL(")",")") && matchL("{","{") && comentario_wii() && wii() && matchL("}","}")){
+        if(matchL("nintendum","switch") && matchL("(","(") && matchT("ID",token.getLexema()) && matchL(")",")") && matchL("{","{") && comentario_wii() && wii() && matchL("}","}")){
             return true;
         } 
         erro("nintendum");
