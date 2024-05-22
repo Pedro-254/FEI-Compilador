@@ -32,8 +32,8 @@ public class ParserTraducaoC {
     public void main(){
         token = getNexToken();
         //________________Importando Métodos_______________
-        traduz("#include <stdio.h>;\n");
-        traduz("#include <string.h>;\n");
+        traduz("#include <stdio.h>\n");
+        traduz("#include <string.h>\n");
 
         //________________Iniciando arquivo_______________
         traduz("int main() {\n");
@@ -359,7 +359,7 @@ public class ParserTraducaoC {
 
 
     public boolean mIDSTRING(){
-        if(matchT("ID", "\"%f\","+token.getLexema()) || matchT("FLUTUANTE","float")){
+        if(matchT("ID", "\"%f\","+token.getLexema()) || matchT("FLUTUANTE","\"%f\","+token.getLexema())){
             // token = getNexToken();
             return true;
         }
