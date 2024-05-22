@@ -3,7 +3,7 @@ public class TraducaoJava {
 public static void main(String[] args) {
  Scanner scanner = new Scanner(System.in);
 System.out.print("___Bem Vindo a Calculadora____\n");
-int valor;
+float valor;
 valor=0;
 int contador;
 contador=0;
@@ -24,7 +24,7 @@ System.out.print("\nEscolha uma operacao: \n");
 System.out.print("Operacoes Disponiveis: \n(0 -> Cancelar) \n(1 -> +)  \n(2 -> -) \n(3 -> *)  \n(4 -> /) \n");
 int operacao;
 operacao = Integer.parseInt(scanner.nextLine());;
-/* ____Realizando Operação_____ */
+/* ____Realizando OperaÃ§Ã£o_____ */
 switch(operacao){
 case 0:
 rodando=false;

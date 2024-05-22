@@ -1,7 +1,7 @@
 fdicere(|___Bem Vindo a Calculadora____\n|)?
 
 
-totum valor?
+miseratio valor?
 valor <- 0?
 
 totum contador?
@@ -16,7 +16,7 @@ fi msgOperacaoInvalida <- |Operacao Invalida!\n|?
 dum(conditio rodando){
     noncommento ____Valor Atual____ oblivion
     fdicere(|Valor Atual: |)?
-    dicere(valor)?
+    mdicere(valor)?
 
     noncommento ____Escolhendo um numero____ oblivion
 
