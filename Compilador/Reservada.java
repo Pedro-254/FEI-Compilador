@@ -27,10 +27,16 @@ public class Reservada extends AFD{
                         return new Token("STRING",plv);
                     case"auditio":
                         return new Token("INPUT",plv);
+                    case"fauditio":
+                        return new Token("STRINGINPUT",plv);
+                    case"fi":
+                        return new Token("FI",plv);
                     case"inanis":
                         return new Token("NULL",plv);
                     case"dicere":
                         return new Token("PRINT",plv);
+                    case"fdicere":
+                        return new Token("STRINGPRINT",plv);
                     case"dum":
                         return new Token("WHILE",plv);
                     case"propositum":

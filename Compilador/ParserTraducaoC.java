@@ -7,6 +7,7 @@ public class ParserTraducaoC {
     List<Token> tokens;
     Token token;
     String conteudo = "";
+    boolean teste = false;
     public ParserTraducaoC(List<Token> tokens) {
         this.tokens = tokens;
     }
@@ -28,7 +29,6 @@ public class ParserTraducaoC {
 
     public void main(){
         token = getNexToken();
-
         //________________Importando Métodos_______________
         traduz("#include <stdio.h>;\n");
 
@@ -58,8 +58,18 @@ public class ParserTraducaoC {
             }
             
         }
-        else if ((token.getTipo().equals("INT") || token.getTipo().equals("FLOAT") || token.getTipo().equals("STRING") || token.getTipo().equals("BOOLEAN")  )) {
+        else if ((token.getTipo().equals("INT") || token.getTipo().equals("FLOAT") || token.getTipo().equals("BOOLEAN")  )) {
             if (declara() && bloco()) {
+                return true;
+            }
+        }
+        else if (token.getTipo().equals("STRING")) {
+            if (declarastring() && bloco()) {
+                return true;
+            }
+        }
+        else if (token.getTipo().equals("FI")) {
+            if (atribuiString() && bloco()) {
                 return true;
             }
         }
@@ -78,7 +88,14 @@ public class ParserTraducaoC {
                 return true;
             }
             
-        }else if (token.getLexema().equals("dum")) {
+        }
+        else if (token.getLexema().equals("fdicere")) {
+            if (fdicere() && bloco()) {
+                return true;
+            }
+            
+        }
+        else if (token.getLexema().equals("dum")) {
             if (dum() && bloco()) {
                 return true;
             }
@@ -105,6 +122,12 @@ public class ParserTraducaoC {
             if (noncoment() && bloco()) {
                 return true;
             }
+        //===========================================================================================================================
+        }else if (token.getTipo().equals("STRINGINPUT")) {
+
+            if (StringInput() && bloco()) {
+                return true;
+            }
             
         }
 
@@ -121,16 +144,35 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //??????????????????????????????? String como char LIMITACAO ????????????????????????????
-    //??????????????????????????????? Boolean como int LIMITACAO ????????????????????????????
     public boolean tipo(){
-        if(matchT("INT","int") || matchT("FLOAT","float") || matchT("STRING","char") || matchT("BOOLEAN","int")){
+        if(matchT("INT","int") || matchT("FLOAT","float") || matchT("BOOLEAN","int")){
             return true;
         }
         // erro("veritipo");
         // Vazio
         return false;
     }
+
+    //===========================================================================================================================
+    //____________________Declara String_________________________ (TRADUZIDO)
+    public boolean declarastring(){
+        if(matchT("STRING","char") && traduz(" ") && matchT("ID",token.getLexema()) && traduz("[100]") && matchT("FIM",";")){
+            return true;
+        }
+        erro("Declara String");
+        return false;
+    }
+
+    //____________________Atribui String__________________________ (TRADUZIDO)
+    public boolean atribuiString(){
+        if(matchT("FI","") && traduz("strcpy(") && matchT("ID", token.getLexema()) && traduz(",") && matchT("ATRIBUICAO", "") && matchT("FRASE", token.getLexema()) && traduz(")") && matchT("FIM", ";")){
+            return true;
+        }
+        erro("Atribui String");
+        return false;
+    }
+
+    //===========================================================================================================================
 
     //____________________Atribui__________________________ (TRADUZIDO)
     public boolean atribui(){
@@ -232,7 +274,7 @@ public class ParserTraducaoC {
 
 
     public boolean IDSTRING(){
-        if(matchT("ID", "\"%d\","+token.getLexema()) || matchT("FRASE",token.getLexema())){
+        if(matchT("ID", "\"%d\","+token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -249,6 +291,47 @@ public class ParserTraducaoC {
         // vazio
         return true;
     }
+
+    //===========================================================================================================================
+    //__________________String Dicere_____________________ (TRADUZIDO)
+    public boolean fdicere(){
+        if(matchL("fdicere", "printf") && matchL("(","(") && fprintado() && matchL(")",")") && matchT("FIM", ";")){
+            return true;
+        }
+        erro("dicere");
+        return false;
+    }
+    
+    // x de dicere
+    public boolean fprintado(){
+        if( fIDSTRING() && fmultiprintado()){
+            // token = getNexToken();
+            return true;
+        }
+        erro("printado");
+        return false;
+    }
+
+
+    public boolean fIDSTRING(){
+        if(matchT("ID", "\"%s\","+token.getLexema()) || matchT("FRASE",token.getLexema())){
+            // token = getNexToken();
+            return true;
+        }
+        erro("IDSTRING");
+        return false;
+    }
+
+    // y de dicere
+    public boolean fmultiprintado(){
+        if((matchT("VIRGULA", ");\nprintf(") && fIDSTRING() && fmultiprintado())){
+            // token = getNexToken();
+            return true;
+        }
+        // vazio
+        return true;
+    }
+    //===========================================================================================================================
     
 
     //_______________Comentario_________________ (TRADUZIDO)
@@ -351,7 +434,7 @@ public class ParserTraducaoC {
         return false;
     }
 
-    //???????????????????????????? INPUT só recebe int pela limitação da Linguagem ???????????????????????????????
+    // Auditio Recebe somente INT
     //_______ Input ________ (TRADUZIDO)
     public boolean Input(){
         if(matchT("INPUT","scanf") && matchL("(","(") && traduz("\"%d\",&") && matchT("ID",token.getLexema()) && matchL(")",")") && matchL("?", ";")){
@@ -362,6 +445,19 @@ public class ParserTraducaoC {
         erro("Erro input");
         return false;
     }
+
+    //===========================================================================================================================
+    //_______ String Input ________ (TRADUZIDO)
+    public boolean StringInput(){
+        if(matchT("STRINGINPUT","scanf") && matchL("(","(") && traduz("\"%s\",&") && matchT("ID",token.getLexema()) && matchL(")",")") && matchL("?", ";")){
+            return true;
+            
+        }
+
+        erro("Erro string input");
+        return false;
+    }
+    //===========================================================================================================================
 
     //________ Switch Case_______ (TRADUZIDO)
     public boolean nintendum(){
@@ -430,10 +526,12 @@ public class ParserTraducaoC {
     public boolean matchL(String lexema, String code){
 
         // _____ Código para debug _____
-        //  System.out.println("Necessario: " + lexema);
-        //  System.out.println("Lexema: " + token.getLexema());
-        //  System.out.println("Token: " + token);
-        //  System.err.println();
+        if (teste == true) {
+            System.out.println("Necessario: " + lexema);
+            System.out.println("Lexema: " + token.getLexema());
+            System.out.println("Token: " + token);
+            System.err.println();
+        }
         
         if(token.getLexema().equals(lexema)){
             traduz(code);
@@ -447,10 +545,13 @@ public class ParserTraducaoC {
     public boolean matchT(String tipo, String code){
 
         // _____ Código para debug _____
-        //  System.out.println("Necessario: " + tipo);
-        //  System.out.println("Tipo: " + token.getTipo());
-        //  System.out.println("Token: " + token);
-        //  System.err.println();
+        if (teste == true) {
+            System.out.println("Necessario: " + tipo);
+            System.out.println("Tipo: " + token.getTipo());
+            System.out.println("Token: " + token);
+            System.err.println();
+        }
+         
 
         if(token.getTipo().equals(tipo)){
             traduz(code);
