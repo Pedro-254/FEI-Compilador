@@ -33,6 +33,7 @@ public class ParserTraducaoC {
         token = getNexToken();
         //________________Importando Métodos_______________
         traduz("#include <stdio.h>;\n");
+        traduz("#include <string.h>;\n");
 
         //________________Iniciando arquivo_______________
         traduz("int main() {\n");
@@ -93,6 +94,12 @@ public class ParserTraducaoC {
         }
         else if (token.getLexema().equals("fdicere")) {
             if (fdicere() && bloco()) {
+                return true;
+            }
+            
+        }
+        else if (token.getLexema().equals("mdicere")) {
+            if (mdicere() && bloco()) {
                 return true;
             }
             
@@ -331,6 +338,45 @@ public class ParserTraducaoC {
         return true;
     }
 
+    //__________________Float Dicere_____________________ (TRADUZIDO)
+    public boolean mdicere(){
+        if(matchL("mdicere", "printf") && matchL("(","(") && mprintado() && matchL(")",")") && matchT("FIM", ";")){
+            return true;
+        }
+        erro("dicere");
+        return false;
+    }
+    
+    // x de dicere
+    public boolean mprintado(){
+        if( mIDSTRING() && mmultiprintado()){
+            // token = getNexToken();
+            return true;
+        }
+        erro("printado");
+        return false;
+    }
+
+
+    public boolean mIDSTRING(){
+        if(matchT("ID", "\"%f\","+token.getLexema()) || matchT("FLUTUANTE","float")){
+            // token = getNexToken();
+            return true;
+        }
+        erro("mIDSTRING");
+        return false;
+    }
+
+    // y de dicere
+    public boolean mmultiprintado(){
+        if((matchT("VIRGULA", ");\nprintf(") && mIDSTRING() && mmultiprintado())){
+            // token = getNexToken();
+            return true;
+        }
+        // vazio
+        return true;
+    }
+
     
 
     //_______________Comentario_________________ (TRADUZIDO)
@@ -523,10 +569,10 @@ public class ParserTraducaoC {
 
         // _____ Código para debug _____
         
-            //System.out.println("Necessario: " + lexema);
-            //System.out.println("Lexema: " + token.getLexema());
-            //System.out.println("Token: " + token);
-            //System.err.println();
+            System.out.println("Necessario: " + lexema);
+            System.out.println("Lexema: " + token.getLexema());
+            System.out.println("Token: " + token);
+            System.err.println();
         
         
         if(token.getLexema().equals(lexema)){
@@ -542,10 +588,10 @@ public class ParserTraducaoC {
 
         // _____ Código para debug _____
         
-            //System.out.println("Necessario: " + tipo);
-            //System.out.println("Tipo: " + token.getTipo());
-            //System.out.println("Token: " + token);
-            //System.err.println();
+            System.out.println("Necessario: " + tipo);
+            System.out.println("Tipo: " + token.getTipo());
+            System.out.println("Token: " + token);
+            System.err.println();
         
          
 

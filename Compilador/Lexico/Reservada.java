@@ -38,6 +38,8 @@ public class Reservada extends AFD{
                         return new Token("PRINT",plv);
                     case"fdicere":
                         return new Token("STRINGPRINT",plv);
+                    case"mdicere":
+                        return new Token("FLOATPRINT",plv);
                     case"dum":
                         return new Token("WHILE",plv);
                     case"propositum":

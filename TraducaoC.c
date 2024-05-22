@@ -1,7 +1,8 @@
 #include <stdio.h>;
+#include <string.h>;
 int main() {
 printf("___Bem Vindo a Calculadora____\n");
-int valor;
+float valor;
 valor=0;
 int contador;
 contador=0;
@@ -12,7 +13,7 @@ strcpy(msgOperacaoInvalida,"Operacao Invalida!\n");
 while(rodando){
 /* ____Valor Atual____ */
 printf("Valor Atual: ");
-printf("%d",valor);
+printf("%f",valor);
 /* ____Escolhendo um numero____ */
 printf("\nEscolha um numero: ");
 int entrada;
@@ -22,7 +23,7 @@ printf("\nEscolha uma operacao: \n");
 printf("Operacoes Disponiveis: \n(0 -> Cancelar) \n(1 -> +)  \n(2 -> -) \n(3 -> *)  \n(4 -> /) \n");
 int operacao;
 scanf("%d",&operacao);
-/* ____Realizando Opera��o_____ */
+/* ____Realizando Operação_____ */
 switch(operacao){
 case 0:
 rodando=0;

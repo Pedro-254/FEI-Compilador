@@ -1,0 +1,13 @@
+miseratio x?
+miseratio y?
+
+x <- 1.1?
+y <- 2.3?
+
+x <- x + y?
+mdicere(x)?
+mdicere(1.65)?
+
+si(3 > x-y){
+    fdicere(|nice|)?
+}

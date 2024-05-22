@@ -98,6 +98,12 @@ public class ParserTraducaoJAVA {
             }
             
         }
+        else if (token.getLexema().equals("mdicere")) {
+            if (mdicere() && bloco()) {
+                return true;
+            }
+            
+        }
         else if (token.getLexema().equals("dum")) {
             if (dum() && bloco()) {
                 return true;
@@ -286,6 +292,44 @@ public class ParserTraducaoJAVA {
     // y de dicere
     public boolean multiprintado(){
         if((matchT("VIRGULA", "+") && IDNUM() && multiprintado())){
+            // token = getNexToken();
+            return true;
+        }
+        // vazio
+        return true;
+    }
+
+    //__________________String Dicere_____________________ (TRADUZIDO)
+    public boolean mdicere(){
+        if(matchL("mdicere", "System.out.print") && matchL("(","(") && mprintado() && matchL(")",")") && matchT("FIM", ";")){
+            return true;
+        }
+        erro("dicere");
+        return false;
+    }
+    
+    // x de dicere
+    public boolean mprintado(){
+        if( mIDSTRING() && mmultiprintado()){
+            // token = getNexToken();
+            return true;
+        }
+        erro("printado");
+        return false;
+    }
+
+    public boolean mIDSTRING(){
+        if(matchT("ID", token.getLexema()) || matchT("FLUTUANTE", token.getLexema())){
+            // token = getNexToken();
+            return true;
+        }
+        erro("mIDSTRING");
+        return false;
+    }
+
+    // y de dicere
+    public boolean mmultiprintado(){
+        if((matchT("VIRGULA", "+") && mIDSTRING() && mmultiprintado())){
             // token = getNexToken();
             return true;
         }
