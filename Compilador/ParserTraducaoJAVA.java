@@ -58,8 +58,18 @@ public class ParserTraducaoJAVA {
             }
             
         }
-        else if ((token.getTipo().equals("INT") || token.getTipo().equals("FLOAT") || token.getTipo().equals("STRING") || token.getTipo().equals("BOOLEAN")  )) {
+        else if ((token.getTipo().equals("INT") || token.getTipo().equals("FLOAT") || token.getTipo().equals("BOOLEAN")  )) {
             if (declara() && bloco()) {
+                return true;
+            }
+        }
+        else if (token.getTipo().equals("STRING")) {
+            if (declarastring() && bloco()) {
+                return true;
+            }
+        }
+        else if (token.getTipo().equals("FI")) {
+            if (atribuiString() && bloco()) {
                 return true;
             }
         }
@@ -78,7 +88,14 @@ public class ParserTraducaoJAVA {
                 return true;
             }
             
-        }else if (token.getLexema().equals("dum")) {
+        }
+        else if (token.getLexema().equals("fdicere")) {
+            if (fdicere() && bloco()) {
+                return true;
+            }
+            
+        }
+        else if (token.getLexema().equals("dum")) {
             if (dum() && bloco()) {
                 return true;
             }
@@ -103,6 +120,12 @@ public class ParserTraducaoJAVA {
 
         }else if (token.getTipo().equals("COMENTARIO")) {
             if (noncoment() && bloco()) {
+                return true;
+            }
+        //===========================================================================================================================
+        }else if (token.getTipo().equals("STRINGINPUT")) {
+
+            if (StringInput() && bloco()) {
                 return true;
             }
             
@@ -130,6 +153,27 @@ public class ParserTraducaoJAVA {
         // Vazio
         return false;
     }
+
+    //===========================================================================================================================
+    //____________________Declara String_________________________ (TRADUZIDO)
+    public boolean declarastring(){
+        if(matchT("STRING","String") && traduz(" ") && matchT("ID",token.getLexema()) && matchT("FIM",";")){
+            return true;
+        }
+        erro("Declara String");
+        return false;
+    }
+
+    //____________________Atribui String__________________________ (TRADUZIDO)
+    public boolean atribuiString(){
+        if(matchT("FI","") && matchT("ID", token.getLexema()) && traduz(" ") && matchT("ATRIBUICAO", "=") && traduz(" ") && matchT("FRASE", token.getLexema()) && matchT("FIM", ";")){
+            return true;
+        }
+        erro("Atribui String");
+        return false;
+    }
+
+    //===========================================================================================================================
 
     //____________________Atribui__________________________ (TRADUZIDO)
     public boolean atribui(){
@@ -232,7 +276,7 @@ public class ParserTraducaoJAVA {
     }
 
     public boolean IDSTRING(){
-        if(matchT("ID", token.getLexema()) || matchT("FRASE", token.getLexema())){
+        if(matchT("ID", token.getLexema())){
             // token = getNexToken();
             return true;
         }
@@ -249,6 +293,46 @@ public class ParserTraducaoJAVA {
         // vazio
         return true;
     }
+
+        //===========================================================================================================================
+    //__________________String Dicere_____________________ (TRADUZIDO)
+    public boolean fdicere(){
+        if(matchL("fdicere", "System.out.println") && matchL("(","(") && fprintado() && matchL(")",")") && matchT("FIM", ";")){
+            return true;
+        }
+        erro("dicere");
+        return false;
+    }
+    
+    // x de dicere
+    public boolean fprintado(){
+        if( fIDSTRING() && fmultiprintado()){
+            // token = getNexToken();
+            return true;
+        }
+        erro("printado");
+        return false;
+    }
+
+    public boolean fIDSTRING(){
+        if(matchT("ID", token.getLexema()) || matchT("FRASE", token.getLexema())){
+            // token = getNexToken();
+            return true;
+        }
+        erro("IDSTRING");
+        return false;
+    }
+
+    // y de dicere
+    public boolean fmultiprintado(){
+        if((matchT("VIRGULA", "+") && fIDSTRING() && fmultiprintado())){
+            // token = getNexToken();
+            return true;
+        }
+        // vazio
+        return true;
+    }
+    //===========================================================================================================================
     
 
     //_______________Comentario_________________ (TRADUZIDO)
@@ -361,6 +445,19 @@ public class ParserTraducaoJAVA {
         erro("Erro input");
         return false;
     }
+
+    //===========================================================================================================================
+    //_______ String Input ________ (TRADUZIDO)
+    public boolean StringInput(){
+        if(traduz("Scanner scanner = new Scanner(System.in);\n") && matchT("STRINGINPUT","") && matchL("(","") && matchT("ID",token.getLexema() + " ") && traduz("= scanner.nextLine()") && matchL(")","") && matchL("?", ";")){
+            return true;
+            
+        }
+
+        erro("Erro string input");
+        return false;
+    }
+    //===========================================================================================================================
 
     //________ Switch Case_______
     public boolean nintendum(){
