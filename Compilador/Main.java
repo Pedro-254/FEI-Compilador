@@ -15,7 +15,7 @@ public class Main {
     List<Token> tokensJava = null;
     List<Token> tokensC = null;
     //_______ Leitura de arquivo_______
-    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/Fatorial.txt")), StandardCharsets.UTF_8);
+    String data = new String(Files.readAllBytes(Paths.get("./compilador/arquivos/TesteFloat.txt")), StandardCharsets.UTF_8);
 
     //_______ Geração de Tokens (Lexico)_______
     Lexer lexerJava = new Lexer(data);
