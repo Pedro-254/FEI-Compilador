@@ -1,3 +1,4 @@
+package Lexico;
 import java.text.CharacterIterator;
 
 public class Delimitador extends AFD {

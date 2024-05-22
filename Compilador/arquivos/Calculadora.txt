@@ -1,0 +1,80 @@
+fdicere(|___Bem Vindo a Calculadora____\n|)?
+
+
+totum valor?
+valor <- 0?
+
+totum contador?
+contador <- 0?
+
+conditio rodando?
+rodando <- verum?
+
+filum msgOperacaoInvalida?
+fi msgOperacaoInvalida <- |Operacao Invalida!\n|?
+
+dum(conditio rodando){
+    noncommento ____Valor Atual____ oblivion
+    fdicere(|Valor Atual: |)?
+    dicere(valor)?
+
+    noncommento ____Escolhendo um numero____ oblivion
+
+    fdicere(|\nEscolha um numero: |)?
+    totum entrada?
+    auditio(entrada)?
+
+    noncommento ____Escolhendo uma Operacao____ oblivion
+
+    fdicere(|\nEscolha uma operacao: \n|)?
+    fdicere(|Operacoes Disponiveis: \n(0 -> Cancelar) \n(1 -> +)  \n(2 -> -) \n(3 -> *)  \n(4 -> /) \n|)?
+    totum operacao?
+    auditio(operacao)?
+
+    noncommento ____Realizando Operação_____ oblivion
+    nintendum(operacao){
+        wii 0:
+            rodando <- falsum?
+            confractus?
+        wii 1:
+            valor <- valor + entrada?
+            confractus?
+        wii 2:
+            valor <- valor - entrada?
+            confractus?
+        wii 3:
+            valor <- valor * entrada?
+            confractus?
+        wii 4:
+            valor <- valor / entrada?
+            confractus?
+        vexillum:
+            fdicere(msgOperacaoInvalida)?
+            contador <- contador - 1?
+            confractus?
+    }
+
+    si(operacao <> 0){
+        contador <- contador + 1?
+    }
+}
+
+fdicere(|__Voce fez |)?
+dicere(contador)?
+fdicere(| operacoes__\n|)?
+
+si(contador <=> 0){
+    fdicere(|\nPra que tu abriu a calculadora? kk\n|)?
+}
+si(contador <= 3){
+    fdicere(|Dava pra ter feito de cabeca\n|)?
+}
+si(contador <=> 4){
+    fdicere(|Ta bao\n|)?
+}
+si(contador > 5){
+    fdicere(|Coroi quanta conta\n|)?
+}
+oppositum {
+    fdicere(|Isso aqui e so um teste de else msm :)|)?
+}
